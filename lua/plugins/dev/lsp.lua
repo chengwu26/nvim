@@ -196,7 +196,7 @@ return {
     opts = {
       -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = {
-        preset = "enter", -- accept completion
+        preset = "super-tab", -- accept completion
         -- select item
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
@@ -209,13 +209,6 @@ return {
       },
       fuzzy = { implementation = "prefer_rust_with_warning" },
       signature = { enabled = true },
-      cmdline = {
-        completion = {
-          menu = {
-            auto_show = true,
-          },
-        },
-      },
       completion = {
         documentation = {
           auto_show = true,
@@ -227,6 +220,7 @@ return {
           lazydev = { module = "lazydev.integrations.blink", score_offset = 100 },
         },
       },
+      cmdline = { enabled = false },
     },
   },
   -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins

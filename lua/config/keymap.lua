@@ -13,7 +13,6 @@ end
 
 map("i", "jj", "<ESC>")
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
-map("t", "<ESC><ESC>", "<C-\\><C-n>", "Exit termianl mode")
 
 map("n", "<C-h>", "<C-w><C-h>", "Move focus to the left window")
 map("n", "<C-l>", "<C-w><C-l>", "Move focus to the right window")

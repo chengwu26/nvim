@@ -4,6 +4,7 @@ local exclude_filetypes = {
   yazi = true,
   mason = true,
   TelescopePrompt = true,
+  snacks_notif_history = true,
 }
 
 ---@type LazySpec

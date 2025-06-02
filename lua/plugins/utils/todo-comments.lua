@@ -5,8 +5,15 @@
 ---@type LazySpec
 return {
   "folke/todo-comments.nvim",
+  lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   event = "VeryLazy",
   opts = { signs = false },
-  -- TODO: set keymap
+  keys = {
+    {
+      "<leader>st",
+      "<CMD>TodoTelescope<CR>",
+      desc = "[S]earch [T]odo comment",
+    },
+  },
 }
