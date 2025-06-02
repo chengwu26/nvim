@@ -1,5 +1,22 @@
 --- Symbol navigate
 
+--[[ Hlper function ]]
+local function setup_buffer_keymaps()
+  local dropbar_api = require("dropbar.api")
+
+  ---@param lhs string
+  ---@param rhs string | function
+  ---@param desc string
+  local map = function(lhs, rhs, desc)
+    vim.keymap.set("n", lhs, rhs, { buffer = true, desc = desc })
+  end
+
+  map("<Leader>;", dropbar_api.pick, "Pick symbol in winbar")
+  map("[;", dropbar_api.goto_context_start, "Go to start of current context")
+  map("];", dropbar_api.select_next_context, "Select next context")
+end
+
+-- [[ Plugin configuration ]]
 ---@type LazySpec
 return {
   "Bekaboo/dropbar.nvim",
@@ -15,29 +32,6 @@ return {
   },
   config = function(_, opts)
     require("dropbar").setup(opts)
-
-    local function setup_buffer_keymaps()
-      vim.keymap.set(
-        "n",
-        "<Leader>;",
-        require("dropbar.api").pick,
-        { buffer = true, desc = "Pick symbol in winbar" }
-      )
-
-      vim.keymap.set(
-        "n",
-        "[;",
-        require("dropbar.api").goto_context_start,
-        { buffer = true, desc = "Go to start of current context" }
-      )
-
-      vim.keymap.set(
-        "n",
-        "];",
-        require("dropbar.api").select_next_context,
-        { buffer = true, desc = "Select next context" }
-      )
-    end
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = CODE_CONF_FT,

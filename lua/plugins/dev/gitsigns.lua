@@ -26,8 +26,7 @@ return {
         vim.keymap.set(mode, l, r, { desc = desc, buffer = bufnr })
       end
 
-      -- TODO: more keymap
-      map("n", "<leader>tb", gitsigns.toggle_current_line_blame, "[T]oggle line [B]lame")
+      map("n", "<leader>tb", gitsigns.toggle_current_line_blame, "Toggle line [B]lame")
       map("n", "<leader>gd", gitsigns.diffthis, "[D]iff this")
 
       -- Navigation
