@@ -33,10 +33,15 @@ plugin dependence them.
 
 - latest [neovim](https://neovim.io/)
 - lazy.nvim's [dependencies](https://lazy.folke.io/#%EF%B8%8F-requirements)
-- nvim-treesitter's [dependencies](https://lazy.folke.io/#%EF%B8%8F-requirements)
+- nvim-treesitter's [dependencies](https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#requirements)
 - mason's [dependencies](https://github.com/mason-org/mason.nvim?tab=readme-ov-file#requirements)
 - npm & yarn (for [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim?tab=readme-ov-file#installation--usage))
-- [yazi](https://github.com/sxyazi/yazi) (file explorer)
 - curl & unzip (only WSL environment need)
 - make (build [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim), optional)
 - telescope.nvim's [dependencies](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#getting-started) (optional)
+
+##### For me
+```zsh
+sudo pacman -Syu git neovim luarocks lua51 npm yarn ripgrep fd treesitter
+# and any one nerd-font
+```
