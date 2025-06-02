@@ -22,7 +22,7 @@ map("n", "<C-k>", "<C-w><C-k>", "Move focus to the upper window")
 
 map("v", "<leader>y", "\"+y", "[Y]ank to clipboard")
 map("n", "<leader>y", "\"+yy", "[y]ank line to clipboard")
-map("n", "<leader>Y", "\"+Y", "[Y]ank to line end to clipboard")
+map("n", "<leader>Y", "\"+y$", "[Y]ank to EOL to clipboard")
 map("n", "<leader>p", "\"+p", "[P]ut from clipboard")
 
 map("n", "<leader>tw", "<CMD>set invwrap<CR>", "Toggle [W]rap")
