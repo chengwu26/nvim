@@ -14,42 +14,42 @@ return {
     {
       "<leader>bb",
       "<CMD>BufferLinePick<CR>",
-      desc = "Pick [B]uffer",
+      desc = "Pick Buffer",
     },
     {
       "<leader>bc",
       "<CMD>BufferLinePickClose<CR>",
-      desc = "[c]lose buffer",
+      desc = "Close Buffer",
     },
     {
       "<leader>bC",
       "<CMD>BufferLineCloseOthers<CR>",
-      desc = "[C]lose All other buffers",
+      desc = "Close Other Buffers",
     },
     {
       "<leader>bp",
       "<CMD>BufferLineTogglePin<CR>",
-      desc = "[P]in current buffer",
+      desc = "Pin Current Buffer",
     },
     {
       "<A-,>",
       "<CMD>BufferLineCyclePrev<CR>",
-      desc = "prev buffer",
+      desc = "Goto Previous Buffer",
     },
     {
       "<A-.>",
       "<CMD>BufferLineCycleNext<CR>",
-      desc = "next buffer",
+      desc = "Goto Next Buffer",
     },
     {
       "<A-<>",
       "<CMD>BufferLineMovePrev<CR>",
-      desc = "move buffer prev",
+      desc = "Move Buffer Previouos",
     },
     {
       "<A->>",
       "<CMD>BufferLineMoveNext<CR>",
-      desc = "move buffer next",
+      desc = "Move Buffer Next",
     },
   },
 }

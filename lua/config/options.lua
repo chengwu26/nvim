@@ -1,11 +1,20 @@
+---@brief
+---
+--- Basic option
 --- To see any one option's detail, type ':h <option>'
+---
+--- If you want to see plugin-related options, they are in the
+--- plugin's own configuration, go to `lua/plugins/` and look for them.
+---
 
 -- [[ Options ]]
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local opt = vim.opt
 -- gerneral
 opt.swapfile = false
 opt.undofile = true
-
 opt.mouse = ""
 opt.jumpoptions = "stack" -- more intuitive
 opt.timeoutlen = 300
@@ -15,12 +24,13 @@ opt.updatetime = 250
 opt.termguicolors = true
 opt.smoothscroll = true
 opt.title = true
-opt.showmode = false -- use status line plugin
-
+opt.showmode = false -- use statusline plugin
+opt.winborder = "single"
 opt.cursorline = true
+
 opt.wrap = false
 opt.breakindent = true
-opt.signcolumn = "yes"
+opt.signcolumn = "auto"
 opt.scrolloff = 5
 
 opt.splitright = true
@@ -41,6 +51,30 @@ opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 -- search
 opt.ignorecase = true
 opt.smartcase = true
+
+-- completion
+opt.completeopt = { "menu", "fuzzy", "noselect", "popup", "preview" }
+
+-- fold
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "" }
+
+-- diagnostic
+vim.diagnostic.config({
+  virtual_lines = { current_line = true },
+  severity_sort = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
+})
 
 -- [[ WSL clipboard integrate ]]
 -- This solution use 'win32yank' to integrate system clipboard.
@@ -71,7 +105,7 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
       return
     end
 
-    local out = vim.fn.system({ "unzip", "-o", tmp_file, "-d", win32yank_dir })
+    out = vim.fn.system({ "unzip", "-o", tmp_file, "-d", win32yank_dir })
     if vim.v.shell_error ~= 0 then
       vim.notify(string.format("Failed to extract files:\n'%s'", out), vim.log.levels.WARN)
       os.remove(tmp_file)
@@ -79,7 +113,7 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
     end
 
     os.remove(tmp_file)
-    local out = vim.fn.system({ "chmod", "+x", win32yank_dir .. "/win32yank.exe" })
+    out = vim.fn.system({ "chmod", "+x", win32yank_dir .. "/win32yank.exe" })
     if vim.v.shell_error ~= 0 then
       vim.notify(string.format("Failed to add execution mode:\n'%s'", out), vim.log.levels.WARN)
       return

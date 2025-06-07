@@ -4,18 +4,22 @@ Base on [lazy.nvim](https://lazy.folke.io/)
 ### Structure
 ``` mermaid
 flowchart TD
-    entry[init.lua] --> config
-    config --> option.lua
-    config --> keymap.lua
-    config --> autocmd.lua
+    init.lua --> config
+    config --> options.lua
+    config --> keymaps.lua
+    config --> autocmds.lua
+    config --> lsp.lua
 
-    entry --> plugins
+    init.lua --> modules
+
+    init.lua --> plugins
     plugins --> ui
     plugins --> utils
     plugins --> dev
 ```
 #### Details
 - `config`: Global and plugin-independent configuration
+- `modules`: Custom modules
 - `plugins`: Setup lazy.nvim and configurate plugins
   - `ui`: ui/apparence
   - `utils`: useful tools
@@ -25,18 +29,16 @@ flowchart TD
 You can search keyword "NOTE: (DEPENDENCE)" in this repository to inspect all dependencise and which
 plugin dependence them.
 
-- latest [neovim](https://neovim.io/)
+- [neovim](https://neovim.io/) >= 0.11
 - lazy.nvim's [dependencies](https://lazy.folke.io/#%EF%B8%8F-requirements)
 - nvim-treesitter's [dependencies](https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#requirements)
 - mason's [dependencies](https://github.com/mason-org/mason.nvim?tab=readme-ov-file#requirements)
 - npm & yarn (for [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim?tab=readme-ov-file#installation--usage))
 - curl & unzip (only WSL environment need)
-- make (build [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim), optional)
-- telescope.nvim's [dependencies](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#getting-started) (optional)
 
 ##### For me
 ```zsh
-sudo pacman -Syu git neovim luarocks lua51 npm yarn ripgrep fd treesitter
+sudo pacman -Syu git neovim luarocks lua51 npm yarn treesitter
 # and any one nerd-font
 ```
 

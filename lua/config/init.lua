@@ -1,7 +1,11 @@
---- These autocmd, keymap and option are independent of the plugin.
---- The plugin-related are at its own configuration file.
---- For example, lualine's keymap in 'plugin/ui/lualine.lua'.
+---@brief
+---
+--- All configurations in this module are independent of any
+---  plugin and must be used independently.
+--- If you need to replace these default behaviors with plugin functionality,
+---  you should override them in the plugin's own configuration.
 
-require("config.option")
-require("config.keymap")
-require("config.autocmd")
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+require("config.lsp")

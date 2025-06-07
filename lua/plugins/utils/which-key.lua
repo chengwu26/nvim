@@ -1,7 +1,10 @@
+---@brief
+---
 --- Showing available keybindings in a popup as you type.
 ---
 --- Keybindings should define in global keymap file(config/keymap.lua)
---- or plugin's config file(e.g plugins/ui/tabline.lua)
+--- or plugin's configuration file(e.g plugins/ui/tabline.lua)
+---
 
 -- tip: 'z=' show spelling suggestions
 ---@type LazySpec
@@ -12,9 +15,7 @@ return {
   keys = {
     {
       "<leader>?",
-      function()
-        require("which-key").show({ global = false })
-      end,
+      function() require("which-key").show({ global = false }) end,
       desc = "Buffer Local Keymaps (which-key)",
     },
   },
@@ -22,16 +23,19 @@ return {
   opts = {
     ---@type false | "classic" | "modern" | "helix"
     preset = "helix",
-    ---@type wk.Win.opts
     keys = {
       scroll_down = "<c-j>", -- binding to scroll down inside the popup
       scroll_up = "<c-k>", -- binding to scroll up inside the popup
     },
+    ---@type wk.Spec
     spec = {
-      { "<leader>t", group = "[T]oggle" },
-      { "<leader>s", group = "[S]earch" },
-      { "<leader>b", group = "[B]uffer" },
-      { "<leader>g", group = "[G]it" },
+      { "<leader>t", group = "Toggle" },
+      { "<leader>s", group = "Search" },
+      { "<leader>b", group = "Buffer" },
+      { "<leader>g", group = "Git" },
+      { "<leader>f", group = "Find" },
+      { "gr", group = "More LSP" },
+      { "<leader>c", group = "Cellular Automaton" },
     },
   },
 }

@@ -15,12 +15,10 @@ return {
       ---@param l string
       ---@param r string | function
       ---@param desc string
-      local function map(mode, l, r, desc)
-        vim.keymap.set(mode, l, r, { desc = desc, buffer = bufnr })
-      end
+      local function map(mode, l, r, desc) vim.keymap.set(mode, l, r, { desc = desc, buffer = bufnr }) end
 
-      map("n", "<leader>tb", gitsigns.toggle_current_line_blame, "Toggle line [B]lame")
-      map("n", "<leader>gd", gitsigns.diffthis, "[D]iff this")
+      map("n", "<leader>tb", gitsigns.toggle_current_line_blame, "Toggle Line Blame")
+      map("n", "<leader>gd", gitsigns.diffthis, "Diff this")
 
       -- Navigation
       map("n", "]c", function()
@@ -29,7 +27,7 @@ return {
         else
           gitsigns.nav_hunk("next")
         end
-      end, "next hunk")
+      end, "Next Hunk")
 
       map("n", "[c", function()
         if vim.wo.diff then
@@ -37,7 +35,7 @@ return {
         else
           gitsigns.nav_hunk("prev")
         end
-      end, "prev hunk")
+      end, "Prev Hunk")
     end,
   },
 }

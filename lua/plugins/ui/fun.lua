@@ -5,25 +5,12 @@ return {
   "Eandrju/cellular-automaton.nvim",
   ft = CODE_CONF_FT,
   config = function()
-    local function setup_buffer_keymaps()
-      vim.keymap.set(
-        "n",
-        "<leader>fr",
-        "<CMD>CellularAutomaton make_it_rain<CR>",
-        { buffer = true, desc = "Make it [R]ain" }
-      )
-
-      vim.keymap.set(
-        "n",
-        "<leader>fl",
-        "<CMD>CellularAutomaton game_of_life<CR>",
-        { buffer = true, desc = "Game of [L]ife" }
-      )
-    end
-
     vim.api.nvim_create_autocmd("FileType", {
       pattern = CODE_CONF_FT,
-      callback = setup_buffer_keymaps,
+      callback = function(event)
+        vim.keymap.set("n", "<leader>cr", "<CMD>CellularAutomaton make_it_rain<CR>", { buffer = event.buf, desc = "Make it Rain" })
+        vim.keymap.set("n", "<leader>cl", "<CMD>CellularAutomaton game_of_life<CR>", { buffer = event.buf, desc = "Game of Life" })
+      end,
     })
   end,
 }

@@ -21,14 +21,7 @@ return {
   config = function()
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "markdown",
-      callback = function()
-        vim.keymap.set(
-          "n",
-          "<leader>tp",
-          "<CMD>MarkdownPreviewToggle<CR>",
-          { buffer = true, desc = "Toggle Markdown [P]review" }
-        )
-      end,
+      callback = function() vim.keymap.set("n", "<leader>tp", "<CMD>MarkdownPreviewToggle<CR>", { buffer = true, desc = "Toggle Markdown Preview" }) end,
     })
   end,
 }

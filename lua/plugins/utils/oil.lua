@@ -1,4 +1,6 @@
----
+---@brief
+--- File explorer
+
 ---@type LazySpec
 return {
   "stevearc/oil.nvim",
@@ -7,7 +9,5 @@ return {
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {},
-  init = function()
-    vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "[E]xplore current directory" })
-  end,
+  init = function() vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Explore Current Directory" }) end,
 }

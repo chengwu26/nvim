@@ -7,13 +7,11 @@ local function setup_buffer_keymaps()
   ---@param lhs string
   ---@param rhs string | function
   ---@param desc string
-  local map = function(lhs, rhs, desc)
-    vim.keymap.set("n", lhs, rhs, { buffer = true, desc = desc })
-  end
+  local map = function(lhs, rhs, desc) vim.keymap.set("n", lhs, rhs, { buffer = true, desc = desc }) end
 
-  map("<Leader>;", dropbar_api.pick, "Pick symbol in winbar")
-  map("[;", dropbar_api.goto_context_start, "Go to start of current context")
-  map("];", dropbar_api.select_next_context, "Select next context")
+  map("<Leader>;", dropbar_api.pick, "Pick Symbol")
+  map("[;", dropbar_api.goto_context_start, "Go to Start of Current Context")
+  map("];", dropbar_api.select_next_context, "Select Next Context")
 end
 
 -- [[ Plugin configuration ]]
