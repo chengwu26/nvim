@@ -1,3 +1,12 @@
+---@brief
+---
+--- This Neovim configuration has some dependencies, which are annotated
+--- with `NOTE: (DEPENDENCE)` keyword at the plugin location with the
+--- dependency. You can search for this keyword to see them. Or if you have
+--- already loaded this configuration, you can use `<leader>st' and then enter
+--- the keyword to quickly see them.
+---
+
 -- NOTE: The configuration contain some plugins about development.
 -- To avoid installing them when they are not needed, like root user,
 -- they are disabled by default.

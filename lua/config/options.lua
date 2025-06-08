@@ -95,7 +95,14 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
       vim.notify("Failed to install win32yank:\nDon't have curl or unzip", vim.log.levels.WARN)
       return
     end
-    local url = "https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x86.zip"
+    local url = "https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-%s.zip"
+    if jit.arch == "x86" or jit.arch == "x64" then
+      url = string.format(url, jit.arch)
+    else
+      vim.notify("Just support x86 and x64.")
+      return
+    end
+
     local tmp_file = os.tmpname() .. ".zip"
     -- download win32yank
     local out = vim.fn.system({ "curl", "-L", "-o", tmp_file, url })
