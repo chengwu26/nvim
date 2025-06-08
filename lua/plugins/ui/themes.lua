@@ -21,9 +21,14 @@ return {
       "default",
       "rose-pine-moon",
       "rose-pine-main",
-      "tokyonight-moon",
-      "tokyonight-night",
-      "tokyonight-storm",
+      "duskfox",
+      "nordfox",
+      "terafox",
+      "nightfox",
+      "carbonfox",
+      "rose-pine-dawn",
+      "dayfox",
+      "dawnfox",
     },
   },
   -- Add colorscheme as dependence to install and load them
@@ -34,8 +39,14 @@ return {
       opts = {},
     },
     {
-      "folke/tokyonight.nvim",
-      opts = {},
+      "EdenEast/nightfox.nvim",
+      opts = {
+        options = {
+          styles = {
+            comments = "italic",
+          },
+        },
+      },
     },
   },
 }
