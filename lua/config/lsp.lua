@@ -11,6 +11,7 @@ vim.lsp.enable({
   "lua_ls",
   "pyright",
   "rust_analyzer",
+  "harper_ls",
 })
 
 require("modules.lsp_config").setup()
