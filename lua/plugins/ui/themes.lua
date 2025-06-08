@@ -6,9 +6,9 @@
 --- Since it isn't frequent to swithch theme, so there isn't keymap to switch
 --- themes.
 ---
---- If you want to add another colorscheme, refer the comment of 'dependences'
+--- If you want to add another colorscheme, refer the comment of 'dependencies'
 --- and 'opts' keys. Remove colorscheme also just need to delete it from
---- 'dependences' and 'opts'.
+--- 'dependencies' and 'opts'.
 
 ---@type LazySpec
 return {

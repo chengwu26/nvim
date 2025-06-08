@@ -26,7 +26,7 @@ flowchart TD
   - `dev`: Development tools. This module disabled by default, modify `init.lua`(not plugins/init.lua) to enable
 
 ### Dependencies
-You can search keyword "NOTE: (DEPENDENCE)" in this repository to inspect all dependencise and which
+You can search keyword "NOTE: (DEPENDENCE)" in this repository to inspect all dependencies and which
 plugin dependence them.
 
 - [neovim](https://neovim.io/) >= 0.11

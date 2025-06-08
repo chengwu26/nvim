@@ -1,7 +1,7 @@
 ---@brief
 ---
 --- Basic option
---- To see any one option's detail, type ':h <option>'
+--- To see anyone option's detail, type ':h <option>'
 ---
 --- If you want to see plugin-related options, they are in the
 --- plugin's own configuration, go to `lua/plugins/` and look for them.
@@ -12,7 +12,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local opt = vim.opt
--- gerneral
+-- general
 opt.swapfile = false
 opt.undofile = true
 opt.mouse = ""

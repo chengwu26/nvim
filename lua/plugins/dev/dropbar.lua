@@ -1,6 +1,6 @@
 --- Symbol navigate
 
---[[ Hlper function ]]
+--[[ Helper function ]]
 local function setup_buffer_keymaps()
   local dropbar_api = require("dropbar.api")
 
@@ -24,7 +24,7 @@ return {
     sources = {
       path = {
         ---@type boolean|fun(path: string): boolean?|nil
-        preview = false, -- diable preview file
+        preview = false, -- disable preview file
       },
     },
   },

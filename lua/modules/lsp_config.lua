@@ -110,7 +110,7 @@ local default_opts = {
 -- But each modification will inherit the last configuration
 --
 -- `opts`:
---   `auto_completion` (boolean): enable lsp auto completion, (default ture)
+--   `auto_completion` (boolean): enable lsp auto completion, (default true)
 --   `progress` (function): custom lsp progress notify
 --   `keys` (table<vim.lsp.protocol.Methods, function>): custom lsp method behavior
 --

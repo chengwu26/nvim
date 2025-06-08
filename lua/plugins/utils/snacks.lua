@@ -1,6 +1,6 @@
 ---@brief
 ---
---- Some QoL snacks. More details can refer to repositry
+--- Some QoL snacks. More details can refer to repository
 ---
 --- You can use 'Notify' command to display all notify history.
 --- The command can also accept one or more level argument to

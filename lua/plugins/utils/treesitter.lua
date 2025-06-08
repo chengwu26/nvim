@@ -1,4 +1,4 @@
---- Treesitter configurations and abstraction layer.
+--- Tree-sitter configurations and abstraction layer.
 ---
 --- NOTE: (DEPENDENCE)
 --- See also https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#requirements
