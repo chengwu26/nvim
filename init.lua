@@ -21,7 +21,7 @@ ENABLE_DEV = false
 
 --- Program language
 ---@type string[]
-CODE_FT = { "python", "lua", "c", "cpp", "rust", "zsh" }
+CODE_FT = { "python", "lua", "c", "cpp", "rust" }
 
 --- Config language
 ---@type string[]

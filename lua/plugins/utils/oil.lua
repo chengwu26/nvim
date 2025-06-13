@@ -9,5 +9,7 @@ return {
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {},
-  init = function() vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Explore Current Directory" }) end,
+  init = function()
+    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Explore Current Directory" })
+  end,
 }

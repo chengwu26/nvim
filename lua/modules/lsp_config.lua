@@ -161,7 +161,13 @@ M.setup = function(opts)
       map("<leader>tl", wrapper_toggle_diagnostic(), "Toggle Diagnostic Lines")
 
       if lsp_is_support(methods.textDocument_inlayHint) then
-        map("<leader>th", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })) end, "Toggle Inlay Hints")
+        map(
+          "<leader>th",
+          function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+          end,
+          "Toggle Inlay Hints"
+        )
       end
 
       -- highlight symbol under cursor
@@ -178,7 +184,12 @@ M.setup = function(opts)
     callback = function(event)
       local client = vim.lsp.get_client_by_id(event.data.client_id)
       if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
-        vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = opts.auto_completion })
+        vim.lsp.completion.enable(
+          true,
+          client.id,
+          event.buf,
+          { autotrigger = opts.auto_completion }
+        )
       end
     end,
   })

@@ -9,8 +9,18 @@
 local map = vim.keymap.set
 -- basic
 map("i", "jk", "<ESC>", { silent = true })
-map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Move cursor down" })
-map("x", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Move cursor down" })
+map(
+  "n",
+  "j",
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true, desc = "Move cursor down" }
+)
+map(
+  "x",
+  "j",
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true, desc = "Move cursor down" }
+)
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move cursor up" })
 map("x", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move cursor up" })
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
