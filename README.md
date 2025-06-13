@@ -20,7 +20,7 @@ flowchart TD
 #### Details
 - `config`: Global and plugin-independent configuration
 - `modules`: Custom modules
-- `plugins`: Setup lazy.nvim and configurate plugins
+- `plugins`: Setup lazy.nvim and configure plugins
   - `ui`: ui/apparence
   - `utils`: useful tools
   - `dev`: Development tools. This module disabled by default, modify `init.lua`(not plugins/init.lua) to enable

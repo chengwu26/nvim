@@ -70,7 +70,10 @@ return {
     local cargo_workspace_root
 
     if cargo_crate_dir == nil then
-      on_dir(vim.fs.root(fname, { "rust-project.json" }) or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1]))
+      on_dir(
+        vim.fs.root(fname, { "rust-project.json" })
+          or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
+      )
       return
     end
 
@@ -95,7 +98,17 @@ return {
 
         on_dir(cargo_workspace_root or cargo_crate_dir)
       else
-        vim.schedule(function() vim.notify(("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd, output.stderr)) end)
+        vim.schedule(
+          function()
+            vim.notify(
+              ("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(
+                output.code,
+                cmd,
+                output.stderr
+              )
+            )
+          end
+        )
       end
     end)
   end,
@@ -111,6 +124,11 @@ return {
     end
   end,
   on_attach = function()
-    vim.api.nvim_buf_create_user_command(0, "LspCargoReload", function() reload_workspace(0) end, { desc = "Reload current cargo workspace" })
+    vim.api.nvim_buf_create_user_command(
+      0,
+      "LspCargoReload",
+      function() reload_workspace(0) end,
+      { desc = "Reload current cargo workspace" }
+    )
   end,
 }
