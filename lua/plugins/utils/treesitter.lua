@@ -11,7 +11,6 @@ return {
   build = ":TSUpdate",
   branch = "master",
   main = "nvim-treesitter.configs",
-  init = function() vim.opt.foldcolumn = "1" end,
   opts = {
     auto_install = true,
     ignore_install = {},
