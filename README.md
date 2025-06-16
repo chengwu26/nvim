@@ -47,6 +47,3 @@ sudo pacman -Syu git neovim luarocks lua51 npm yarn treesitter
 - Independent between modules (as much as possible)
   > make sure you can remove any modules/plugin and not break neovim
 - Reasonable lazy loading logic
-
-### Known Issue
-- Arch Linux root user (only root user, in my environment) invoke `win32yank.exe` will get an error: Invalid Arguments
