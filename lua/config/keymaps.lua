@@ -24,21 +24,38 @@ map(
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move cursor up" })
 map("x", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move cursor up" })
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
+-- quick replace string
+map("n", "<C-s>", ":%s/")
+map("v", "<C-s>", ":s/")
 
 -- window
-map("n", "\\", "<CMD>:sp<CR>", { desc = "Split window horizontally" })
-map("n", "|", "<CMD>:vsp<CR>", { desc = "Split window vertically" })
-map("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-map("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-map("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-map("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+---@param target_direction 'h'|'j'|'k'|'l'
+local function smart_navigation(target_direction)
+  local current_wid = vim.api.nvim_get_current_win()
+  vim.cmd("wincmd " .. target_direction)
+  local new_wid = vim.api.nvim_get_current_win()
 
+  -- Specified direction haven't window and `neovim` inside `tmux` now.
+  -- Attempt focus `tmux` pane which specified direction, if any.
+  if (current_wid == new_wid) and (vim.env.TMUX ~= nil) then
+    local directions = { h = "L", j = "D", k = "U", l = "R" }
+    vim.fn.system({ "tmux", "select-pane", "-" .. directions[target_direction] })
+  end
+end
+map("n", "\\", "<CMD>sp<CR>", { desc = "Split window horizontally" })
+map("n", "|", "<CMD>vsp<CR>", { desc = "Split window vertically" })
+map("n", "<C-h>", function() smart_navigation("h") end, { desc = "Move focus to the left window" })
+map("n", "<C-l>", function() smart_navigation("l") end, { desc = "Move focus to the right window" })
+map("n", "<C-j>", function() smart_navigation("j") end, { desc = "Move focus to the lower window" })
+map("n", "<C-k>", function() smart_navigation("k") end, { desc = "Move focus to the upper window" })
+
+-- yank & put
 map("v", "<leader>y", "\"+y", { desc = "Yank to clipboard" })
 map("n", "<leader>y", "\"+yy", { desc = "Yank line to clipboard" })
 map("n", "<leader>Y", "\"+y$", { desc = "Yank to EOL to clipboard" })
 map("n", "<leader>p", "\"+p", { desc = "Put from clipboard" })
 
--- option
+-- options
 map("n", "<leader>tw", "<CMD>set invwrap<CR>", { desc = "Toggle Wrap" })
 map("n", "<leader>tn", "<CMD>set invrelativenumber<CR>", { desc = "Toggle Relative Number" })
 
