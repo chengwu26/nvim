@@ -19,34 +19,14 @@ return {
     -- Add colorscheme's name at here to let 'Themery' to manage it.
     themes = {
       "default",
-      "rose-pine-moon",
-      "rose-pine-main",
-      "duskfox",
-      "nordfox",
-      "terafox",
-      "nightfox",
-      "carbonfox",
-      "rose-pine-dawn",
-      "dayfox",
-      "dawnfox",
+      "catppuccin-latte",
+      "catppuccin-frappe",
+      "catppuccin-macchiato",
+      "catppuccin-mocha",
     },
   },
   -- Add colorscheme as dependence to install and load them
   dependencies = {
-    {
-      "rose-pine/neovim",
-      name = "rose-pine",
-      opts = {},
-    },
-    {
-      "EdenEast/nightfox.nvim",
-      opts = {
-        options = {
-          styles = {
-            comments = "italic",
-          },
-        },
-      },
-    },
+    { "catppuccin/nvim", name = "catppuccin" },
   },
 }
