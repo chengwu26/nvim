@@ -13,7 +13,6 @@ return {
       lua = { "stylua" },
       -- python = { "isort", "black" }, -- TODO: fmt
       rust = { "rustfmt" },
-      ["_"] = { "trim_whitespace" },
     },
   },
 }
