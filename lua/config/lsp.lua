@@ -12,6 +12,7 @@ vim.lsp.enable({
   "pyright",
   "rust_analyzer",
   "harper_ls",
+  "jsonls",
 })
 
 require("modules.lsp_config").setup()
