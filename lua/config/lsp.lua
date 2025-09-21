@@ -13,6 +13,7 @@ vim.lsp.enable({
   "rust_analyzer",
   "harper_ls",
   "jsonls",
+  "marksman",
 })
 
 require("modules.lsp_config").setup()
