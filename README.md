@@ -33,12 +33,12 @@ plugin dependence them.
 - lazy.nvim's [dependencies](https://lazy.folke.io/#%EF%B8%8F-requirements)
 - nvim-treesitter's [dependencies](https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#requirements)
 - mason's [dependencies](https://github.com/mason-org/mason.nvim?tab=readme-ov-file#requirements)
-- npm & yarn (for [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim?tab=readme-ov-file#installation--usage))
+- yarn (for [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim?tab=readme-ov-file#installation--usage))
 - curl & unzip (only WSL environment need)
 
 ##### For me
 ```zsh
-sudo pacman -Syu git neovim luarocks lua51 npm yarn treesitter
+sudo pacman -Syu git neovim luarocks lua51 yarn treesitter
 # and any one nerd-font
 ```
 
