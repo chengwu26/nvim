@@ -7,15 +7,20 @@
 ---@type LazySpec
 return {
   "nvim-treesitter/nvim-treesitter",
-  lazy = false, -- this plugin does not support lazy-loading.
+  lazy = false, -- This plugin does not support lazy-loading.
   build = ":TSUpdate",
-  branch = "master",
-  main = "nvim-treesitter.configs",
-  opts = {
-    auto_install = true,
-    ignore_install = {},
-    sync_install = false,
-    highlight = { enable = true },
-    indent = { enable = true },
-  },
+  branch = "main",
+  opts = {},
+  config = function()
+    require("nvim-treesitter").install(CODE_CONF_FT):wait(300000)
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = CODE_CONF_FT,
+      callback = function()
+        vim.treesitter.start()
+        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end,
+    })
+  end,
 }

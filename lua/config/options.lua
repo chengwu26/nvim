@@ -61,7 +61,6 @@ opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldmethod = "expr"
 opt.foldcolumn = "1"
-opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "" }
 
 -- [[ Custom fold-text]]
