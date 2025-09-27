@@ -14,7 +14,7 @@ local function setup_buffer_keymaps()
   map("];", dropbar_api.select_next_context, "Select Next Context")
 end
 
--- [[ Plugin configuration ]]
+-- [[ Plugin Configuration ]]
 ---@type LazySpec
 return {
   "Bekaboo/dropbar.nvim",
@@ -24,7 +24,7 @@ return {
     sources = {
       path = {
         ---@type boolean|fun(path: string): boolean?|nil
-        preview = false, -- disable preview file
+        preview = false, -- Disable preview file
       },
     },
   },

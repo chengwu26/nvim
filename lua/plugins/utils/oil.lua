@@ -1,5 +1,6 @@
 ---@brief
 --- File explorer
+---
 
 ---@type LazySpec
 return {

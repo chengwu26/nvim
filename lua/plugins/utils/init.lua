@@ -1,4 +1,4 @@
---- useful tool
+--- Useful tool
 
 return {
   require("plugins.utils.treesitter"),

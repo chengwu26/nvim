@@ -24,7 +24,7 @@ map(
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move cursor up" })
 map("x", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move cursor up" })
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
--- quick replace string
+-- Quick replace string
 map("n", "<C-s>", ":%s/")
 map("v", "<C-s>", ":s/")
 
@@ -59,7 +59,7 @@ map("n", "<leader>p", "\"+p", { desc = "Put from clipboard" })
 map("n", "<leader>tw", "<CMD>set invwrap<CR>", { desc = "Toggle Wrap" })
 map("n", "<leader>tn", "<CMD>set invrelativenumber<CR>", { desc = "Toggle Relative Number" })
 
--- remove global LSP keymaps
+-- Remove global LSP keymaps
 vim.keymap.del("n", "grn")
 vim.keymap.del({ "n", "v" }, "gra")
 vim.keymap.del("n", "grr")

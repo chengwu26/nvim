@@ -7,7 +7,7 @@
 --- filter notifications
 ---
 
--- [[ Helper functions ]]
+-- [[ Helper Functions ]]
 -- LSP progress
 local function wrapper_lsp_progress_callback()
   ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
@@ -54,7 +54,7 @@ local function wrapper_lsp_progress_callback()
   end
 end
 
--- [[ Plugin configuration ]]
+-- [[ Plugin Configuration ]]
 ---@type LazySpec[]
 return {
   {
@@ -145,7 +145,7 @@ return {
       { "<leader>gT", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
       { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
       { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
-      -- Grep
+      -- grep
       { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Opened Buffers" },
       {
         "<leader>sw",

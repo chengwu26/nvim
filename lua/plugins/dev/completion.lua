@@ -4,7 +4,7 @@ return {
   event = "LspAttach",
   version = "1.*",
   dependencies = {
-    -- optional: provides snippets for the snippet source
+    -- Optional: provides snippets for the snippet source
     {
       "rafamadriz/friendly-snippets",
     },
@@ -15,7 +15,7 @@ return {
     -- See :h blink-cmp-config-keymap for defining your own keymap
     keymap = {
       preset = "super-tab", -- accept completion
-      -- scroll documentation
+      -- Scroll documentation
       ["<C-u>"] = { "scroll_documentation_up", "fallback" },
       ["<C-d>"] = { "scroll_documentation_down", "fallback" },
     },
@@ -32,7 +32,7 @@ return {
     cmdline = { enabled = false },
   },
   init = function()
-    -- disable lsp completion
+    -- Disable LSP completion
     require("modules.lsp_config").setup({ auto_completion = false })
   end,
 }

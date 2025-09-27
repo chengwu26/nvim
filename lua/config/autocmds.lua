@@ -10,13 +10,13 @@
 
 local cmd = vim.api.nvim_create_autocmd
 
--- highlight text on yank
+-- Highlight text on yank
 cmd("TextYankPost", {
   desc = "Highlight when yanking text",
   callback = function() vim.hl.on_yank() end,
 })
 
--- restore cursor position on file open
+-- Restore cursor position on file open
 cmd("BufReadPost", {
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, "\"")

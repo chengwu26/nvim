@@ -6,7 +6,7 @@
 --- or plugin's configuration file(e.g plugins/ui/tabline.lua)
 ---
 
--- tip: 'z=' show spelling suggestions
+-- Tip: 'z=' show spelling suggestions
 ---@type LazySpec
 return {
   "folke/which-key.nvim",
@@ -24,8 +24,8 @@ return {
     ---@type false | "classic" | "modern" | "helix"
     preset = "helix",
     keys = {
-      scroll_down = "<c-j>", -- binding to scroll down inside the popup
-      scroll_up = "<c-k>", -- binding to scroll up inside the popup
+      scroll_down = "<c-j>", -- Binding to scroll down inside the popup
+      scroll_up = "<c-k>", -- Binding to scroll up inside the popup
     },
     ---@type wk.Spec
     spec = {

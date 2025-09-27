@@ -4,7 +4,7 @@ return {
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   opts = {
-    -- auto format on save
+    -- Auto format on save
     format_on_save = {
       timeout_ms = 1000,
       lsp_format = "fallback",

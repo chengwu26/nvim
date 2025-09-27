@@ -2,6 +2,7 @@
 ---
 --- NOTE: (DEPENDENCE)
 --- See also https://github.com/lewis6991/gitsigns.nvim#-requirements
+---
 
 ---@type LazySpec
 return {

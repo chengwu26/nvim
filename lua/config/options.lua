@@ -16,15 +16,17 @@ local opt = vim.opt
 opt.swapfile = false
 opt.undofile = true
 opt.mouse = ""
-opt.jumpoptions = "stack" -- more intuitive
+opt.jumpoptions = "stack" -- Make jumplist more intuitive
 opt.timeoutlen = 300
 opt.updatetime = 250
+opt.title = true
+opt.splitright = true
+opt.splitbelow = true
 
 -- display
 opt.termguicolors = true
 opt.smoothscroll = true
-opt.title = true
-opt.showmode = false -- use statusline plugin
+opt.showmode = false -- Use statusline plugin
 opt.winborder = "single"
 opt.cursorline = true
 
@@ -32,9 +34,6 @@ opt.wrap = false
 opt.breakindent = true
 opt.signcolumn = "auto"
 opt.scrolloff = 5
-
-opt.splitright = true
-opt.splitbelow = true
 
 opt.number = true
 opt.relativenumber = true
@@ -63,7 +62,7 @@ opt.foldmethod = "expr"
 opt.foldcolumn = "1"
 opt.fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "" }
 
--- [[ Custom fold-text]]
+-- [[ Custom Fold-Text]]
 -- Source: https://www.reddit.com/r/neovim/comments/1fzn1zt/custom_fold_text_function_with_treesitter_syntax/
 local function fold_virt_text(result, start_text, lnum)
   local text = ""
@@ -89,7 +88,7 @@ local function fold_virt_text(result, start_text, lnum)
   table.insert(result, { text, hl })
 end
 
--- set fold-text color
+-- Set fold-text color
 local function setup_fold_separator_hl()
   local hl_def = vim.api.nvim_get_hl(0, { name = "@comment.warning" })
   while hl_def.link and not hl_def.bg do
@@ -134,20 +133,20 @@ vim.diagnostic.config({
   },
 })
 
--- [[ WSL clipboard integrate ]]
+-- [[ WSL Clipboard Integrate ]]
 -- This solution use 'win32yank' to integrate system clipboard.
---  If not install win32yank, the code below will install it into `win32yank_dir`.
+-- If not install win32yank, the code below will install it into `win32yank_dir`.
 -- NOTE: (DEPENDENCE)
 --  curl, unzip: install win32yank if it not installed (just for WSL)
 
 if os.getenv("WSL_DISTRO_NAME") ~= nil then
-  -- build win32yank's install directory
+  -- Build win32yank's install directory
   local env_path = vim.env.PATH
   local win32yank_dir = vim.fn.stdpath("data") .. "/win32yank"
   vim.env.PATH = win32yank_dir .. ":" .. env_path
 
   if vim.fn.executable("win32yank.exe") == 0 then
-    -- install win32yank
+    -- Install win32yank
     vim.notify("Installing win32yank.exe")
     if vim.fn.executable("curl") == 0 or vim.fn.executable("unzip") == 0 then
       vim.notify("Failed to install win32yank:\nDon't have curl or unzip", vim.log.levels.WARN)
@@ -162,7 +161,7 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
     end
 
     local tmp_file = os.tmpname() .. ".zip"
-    -- download win32yank
+    -- Download win32yank
     local out = vim.fn.system({ "curl", "-L", "-o", tmp_file, url })
 
     if vim.v.shell_error ~= 0 then

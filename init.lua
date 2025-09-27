@@ -15,9 +15,9 @@ ENABLE_DEV = false
 
 -- Define filetype for lazy loading plugins according to filetype.
 -- If some plugins (lsp, hlchunk etc.) have unexpected loading behavior,
---  add/remove the filetype into/from `CODE_FT` or `CONF_FT`. General, remove
---  a filetype from them, some plugins (lsp, hlchunk etc.) will not load when
---  open this filetype.
+-- add/remove the filetype into/from `CODE_FT` or `CONF_FT`. General, remove
+-- a filetype from them, some plugins (lsp, hlchunk etc.) will not load when
+-- open this filetype.
 
 --- Program language
 ---@type string[]

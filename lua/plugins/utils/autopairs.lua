@@ -17,6 +17,6 @@ return {
   "windwp/nvim-autopairs",
   event = "InsertEnter",
   opts = {
-    fast_wrap = {}, -- enable fast_wrap, detail see documentation comment
+    fast_wrap = {}, -- Enable fast_wrap, detail see documentation comment
   },
 }
