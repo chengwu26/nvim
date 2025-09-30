@@ -6,6 +6,9 @@
 --- plugin's own configuration, go to `lua/plugins/` and look for them.
 ---
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local map = vim.keymap.set
 -- basic
 map("i", "jk", "<ESC>", { silent = true })
