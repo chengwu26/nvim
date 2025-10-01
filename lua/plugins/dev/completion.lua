@@ -33,6 +33,6 @@ return {
   },
   init = function()
     -- Disable LSP completion
-    require("modules.lsp_config").setup({ auto_completion = false })
+    require("modules.lsp").setup({ auto_complete = false })
   end,
 }

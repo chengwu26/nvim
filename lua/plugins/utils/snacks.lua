@@ -105,8 +105,8 @@ return {
 
       -- [[ LSP ]]
       local method = vim.lsp.protocol.Methods
-      require("modules.lsp_config").setup({
-        keys = {
+      require("modules.lsp").setup({
+        rhs = {
           [method.textDocument_definition] = Snacks.picker.lsp_definitions,
           [method.textDocument_declaration] = Snacks.picker.lsp_declarations,
           [method.textDocument_implementation] = Snacks.picker.lsp_implementations,
