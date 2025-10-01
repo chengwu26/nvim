@@ -1,29 +1,21 @@
 ## My Neovim Configuration
 Base on [lazy.nvim](https://lazy.folke.io/)
 
-### Structure
-``` mermaid
-flowchart TD
-    init.lua --> config
-    config --> options.lua
-    config --> keymaps.lua
-    config --> autocmds.lua
-    config --> lsp.lua
-
-    init.lua --> modules
-
-    init.lua --> plugins
-    plugins --> ui
-    plugins --> utils
-    plugins --> dev
+### Project layout
 ```
-#### Details
-- `config`: Global and plugin-independent configuration
-- `modules`: Custom modules
-- `plugins`: Setup lazy.nvim and configure plugins
-  - `ui`: ui/apparence
-  - `utils`: useful tools
-  - `dev`: Development tools. This module disabled by default, modify `init.lua`(not plugins/init.lua) to enable
+├── config/             core config(plugin-independent)
+│   ├── init.lua
+│   ├── autocmds.lua
+│   ├── keymaps.lua
+│   ├── lsp.lua
+│   └── options.lua
+├── modules/            custom modules
+└── plugins/
+    ├── init.lua        setup lazy.nvim
+    ├── dev/            development plugin
+    ├── ui/             ui/apparence plugins
+    └── utils/          core utils plugins
+```
 
 ### Dependencies
 You can search keyword "NOTE: (DEPENDENCE)" in this repository to inspect all dependencies and which
@@ -44,6 +36,6 @@ sudo pacman -Syu git neovim luarocks lua51 yarn treesitter
 
 ### Principle
 - Maintainable
-- Independent between modules (as much as possible)
-  > make sure you can remove any modules/plugin and not break neovim
+- Independent between modules/plugins (as much as possible)
+  > make sure you can remove any modules/plugins and not break Neovim
 - Reasonable lazy loading logic
