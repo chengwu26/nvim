@@ -14,6 +14,7 @@ local map = vim.keymap.set
 map("i", "jk", "<ESC>", { silent = true })
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
 map("x", "/", "<ESC>/\\%V", { desc = "Search within Visual selection" })
+map("n", "L", vim.diagnostic.open_float, { desc = "Open Diagnostic" })
 -- More consistent behavior of j/k when warp is set
 map({ "n", "x" }, "j", "v:count ? 'j' : 'gj'", { expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count ? 'k' : 'gk'", { expr = true, silent = true })
