@@ -10,7 +10,6 @@ return {
   lazy = false, -- This plugin does not support lazy-loading.
   build = ":TSUpdate",
   branch = "main",
-  opts = {},
   config = function()
     require("nvim-treesitter").install(CODE_CONF_FT):wait(300000)
 

@@ -25,7 +25,7 @@ CODE_FT = { "python", "lua", "c", "cpp", "rust" }
 
 --- Config language
 ---@type string[]
-CONF_FT = { "yaml", "toml", "json", "markdown" }
+CONF_FT = { "yaml", "toml", "json", "markdown", "vim", "vimdoc" }
 
 --- Both `CODE_FT` and `CONFIG_FT`
 ---@type string[]
