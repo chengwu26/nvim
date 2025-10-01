@@ -30,7 +30,6 @@ opt.ignorecase = true
 opt.smartcase = true
 
 -- [[ Appearance ]]
-opt.conceallevel = 2
 opt.cursorline = true
 opt.guifont = "Maple Mono NF CN:h12"
 opt.signcolumn = "yes:1"
