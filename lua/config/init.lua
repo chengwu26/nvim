@@ -10,3 +10,10 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 require("config.lsp")
+
+-- Enable enhanced feature
+local utils = require("modules.utils")
+local features = require("modules.features")
+if utils.env == "WSL" then
+  features.wsl_clipboard()
+end

@@ -77,12 +77,3 @@ vim.diagnostic.config({
     },
   },
 })
-
--- [[ WSL Clipboard Integrate ]]
-if require("modules.utils").is_wsl() then
-  local res = require("modules.wsl").setup_clipboard()
-  if res then
-    res = "[Setup Clipboard]\n" .. res
-    vim.notify(res, vim.log.levels.WARN)
-  end
-end
