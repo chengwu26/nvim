@@ -79,23 +79,10 @@ vim.diagnostic.config({
 })
 
 -- [[ WSL Clipboard Integrate ]]
--- This solution use `win32yank` to integrate system clipboard.
-local utils = require("modules.utils")
-if utils.is_wsl() then
-  if utils.setup_win32yank() then
-    return
+if require("modules.utils").is_wsl() then
+  local res = require("modules.wsl").setup_clipboard()
+  if res then
+    res = "[Setup Clipboard]\n" .. res
+    vim.notify(res, vim.log.levels.WARN)
   end
-
-  vim.g.clipboard = {
-    name = "win32yank-wsl",
-    copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf",
-    },
-    paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf",
-    },
-    cache_enabled = true,
-  }
 end
