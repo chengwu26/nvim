@@ -9,4 +9,5 @@ return {
       component_separators = { left = "|", right = "|" },
     },
   },
+  init = function() vim.opt.showmode = false end,
 }
