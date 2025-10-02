@@ -14,6 +14,12 @@ require("config.lsp")
 -- Enable enhanced feature
 local utils = require("modules.utils")
 local features = require("modules.features")
+
 if utils.env == "WSL" then
   features.wsl_clipboard()
+  features.smart_input_method()
+end
+
+if utils.env == "Windows" then
+  features.smart_input_method()
 end

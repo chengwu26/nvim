@@ -75,4 +75,105 @@ do
   end
 end
 
+-- [[ Input Method Switch ]]
+do
+  --- Install im-select
+  ---@return nil|string
+  local install_im_select = function()
+    assert(utils.env == "Windows" or utils.env == "WSL")
+    local install_file = vim.fn.stdpath("data") .. "/im-select/im-select.exe"
+    local url = "https://github.com/daipeihust/im-select/raw/master/win/out/x86/im-select.exe"
+
+    -- Download
+    vim.notify("Download im-select", vim.log.levels.INFO)
+    local out = vim.fn.system({ "curl", "--create-dirs", "-L", "-o", install_file, url })
+    if vim.v.shell_error ~= 0 then
+      return string.format("Failed to download im-select:\n%s", out)
+    end
+
+    if jit.os == "Linux" then
+      -- Add execution mode
+      out = vim.fn.system({ "chmod", "+x", install_file })
+      if vim.v.shell_error ~= 0 then
+        return string.format("Failed to add execution mode: %s", out)
+      end
+    end
+
+    vim.notify("Successed to install im-select", vim.log.levels.INFO)
+  end
+
+  --- Enable the smart input method feature's environment.
+  ---
+  --- This feature enables intelligent input method switching based on editor context,
+  --- such as entering or leaving insert mode or exiting Neovim.
+  ---
+  --- Note: Only for Windows and WSL
+  M.smart_input_method = function()
+    assert(utils.env == "Windows" or utils.env == "WSL", "Only support Windows and WSL")
+
+    local im_select = vim.fn.stdpath("data") .. "/im-select"
+    local sep = utils.env == "WSL" and ":" or ";"
+    vim.env.PATH = im_select .. sep .. vim.env.PATH
+    if vim.fn.executable("im-select.exe") == 0 then
+      local res = install_im_select()
+      if res then
+        vim.notify(res, vim.log.levels.WARN)
+      end
+    end
+
+    local to_cn = function() vim.fn.system({ "im-select.exe", "2052" }) end
+    local to_en = function() vim.fn.system({ "im-select.exe", "1033" }) end
+    local gid = vim.api.nvim_create_augroup("kg.im-select", { clear = true })
+    local cmd = vim.api.nvim_create_autocmd
+    cmd("InsertEnter", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = to_cn,
+    })
+    cmd("InsertLeave", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = to_en,
+    })
+    cmd("VimEnter", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = to_en,
+    })
+    cmd("VimLeave", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = to_cn,
+    })
+    cmd("VimResume", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = function()
+        if vim.fn.mode() ~= "i" then
+          to_en()
+        end
+      end,
+    })
+    cmd("VimSuspend", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = to_cn,
+    })
+    cmd("FocusGained", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = function()
+        if vim.fn.mode() ~= "i" then
+          to_en()
+        end
+      end,
+    })
+    cmd("FocusLost", {
+      desc = "Input Method Switch",
+      group = gid,
+      callback = to_cn,
+    })
+  end
+end
+
 return M
