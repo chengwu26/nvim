@@ -7,11 +7,14 @@
 --- the keyword to quickly see them.
 ---
 
--- NOTE: The configuration contain some plugins about development.
--- To avoid installing them when they are not needed, like root user,
+-- NOTE: This configuration contain some plugins about development.
+-- To avoid installing them when they are not needed, such as root user,
 -- they are disabled by default.
--- To enable them, you just set ENABLE_DEV = true or undefine it.
-ENABLE_DEV = false
+-- You must explicitly enable them by defining global variable `ENABLE_DEV = true`
+-- or environment variable `DEV_ENV`
+-- ---
+-- Priority:
+--  Lua Variable > Environment Variable
 
 -- Define filetype for lazy loading plugins according to filetype.
 -- If some plugins (lsp, hlchunk etc.) have unexpected loading behavior,

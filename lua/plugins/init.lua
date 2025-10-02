@@ -38,7 +38,7 @@ local spec = {
   require("plugins.ui"),
   require("plugins.utils"),
 }
-if ENABLE_DEV then
+if ENABLE_DEV or os.getenv("DEV_ENV") then
   table.insert(spec, require("plugins.dev"))
 end
 
