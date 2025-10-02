@@ -28,12 +28,6 @@ plugin dependence them.
 - yarn (for [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim?tab=readme-ov-file#installation--usage))
 - curl & unzip (only WSL environment need)
 
-##### For me
-```zsh
-sudo pacman -Syu git neovim luarocks lua51 yarn treesitter
-# and any one nerd-font
-```
-
 ### Principle
 - Maintainable
 - Independent between modules/plugins (as much as possible)
