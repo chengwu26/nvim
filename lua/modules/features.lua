@@ -64,14 +64,26 @@ do
     local win32yank_dir = vim.fn.stdpath("data") .. "/win32yank"
     vim.env.PATH = win32yank_dir .. ":" .. vim.env.PATH
 
-    if vim.fn.executable("win32yank.exe") == 1 then
-      return
+    if vim.fn.executable("win32yank.exe") == 0 then
+      local res = install_win32yank(win32yank_dir)
+      if res then
+        vim.notify(res, vim.log.levels.WARN)
+        return
+      end
     end
 
-    local res = install_win32yank(win32yank_dir)
-    if res then
-      vim.notify(res, vim.log.levels.WARN)
-    end
+    vim.g.clipboard = {
+      name = "win32yank-wsl",
+      copy = {
+        ["+"] = "win32yank.exe -i --crlf",
+        ["*"] = "win32yank.exe -i --crlf",
+      },
+      paste = {
+        ["+"] = "win32yank.exe -o --lf",
+        ["*"] = "win32yank.exe -o --lf",
+      },
+      cache_enabled = true,
+    }
   end
 end
 
