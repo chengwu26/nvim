@@ -24,11 +24,11 @@
 
 --- Program language
 ---@type string[]
-CODE_FT = { "python", "lua", "c", "cpp", "rust" }
+CODE_FT = { "python", "lua", "c", "cpp", "rust", "vim" }
 
---- Config language
+--- Config and markup language
 ---@type string[]
-CONF_FT = { "yaml", "toml", "json", "markdown", "vim", "vimdoc" }
+CONF_FT = { "yaml", "toml", "json", "markdown", "vimdoc" }
 
 --- Both `CODE_FT` and `CONFIG_FT`
 ---@type string[]
