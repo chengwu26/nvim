@@ -15,6 +15,8 @@ return {
         ["<C-s>"] = false,
         ["<C-h>"] = false,
         ["<C-t>"] = false,
+        ["<C-l>"] = false,
+        ["<F5>"] = "actions.refresh",
       },
       float = {
         padding = 4,
