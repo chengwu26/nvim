@@ -59,6 +59,7 @@ opt.fillchars = { fold = " " }
 opt.foldlevel = 5
 opt.foldlevelstart = 5
 opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldtext = "v:lua.require'modules.utils'.foldtext()"
 -- completion
 opt.completeopt = { "menuone", "fuzzy", "noinsert", "popup" }

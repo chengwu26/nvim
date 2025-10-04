@@ -13,6 +13,7 @@
 
 local cmd = vim.api.nvim_create_autocmd
 
+-- [[ General ]]
 -- Highlight text on yank
 cmd("TextYankPost", {
   desc = "Highlight when yanking text",
@@ -51,8 +52,12 @@ cmd("FileType", {
 --  They also can be disable through
 --  ```lua
 --  vim.api.nvim_clear_autocmds{ group = "kg.lsp.complete" }
+--
 --  vim.api.nvim_clear_autocmds{ group = "kg.lsp.format" }
---  vim.api.nvim_clear_autocmds{ group = "kg.lsp.highlight" }
+--  vim.api.nvim_clear_autocmds{ group = "kg.lsp.format.on_save" }
+--
+--  vim.api.nvim_clear_autocmds{ group = "kg.lsp.highlight.on" }
+--  vim.api.nvim_clear_autocmds{ group = "kg.lsp.highlight.off" }
 --  ```
 --
 do
@@ -193,29 +198,16 @@ do
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
           buffer = args.buf,
           group = hl_augroup,
-          callback = function()
-            if not has_group("kg.lsp.highlight") then
-              return true
-            end
-            vim.lsp.buf.document_highlight()
-          end,
+          callback = vim.lsp.buf.document_highlight,
         })
         vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
           buffer = args.buf,
           group = hl_augroup,
-          callback = function()
-            vim.lsp.buf.clear_references()
-            if not has_group("kg.lsp.highlight") then
-              return true
-            end
-          end,
+          callback = vim.lsp.buf.clear_references,
         })
         vim.api.nvim_create_autocmd("LspDetach", {
-          group = vim.api.nvim_create_augroup("kg.lsp.highlight.off", { clear = true }),
+          group = vim.api.nvim_create_augroup("kg.lsp.highlight.off", {}),
           callback = function(_args)
-            if not has_group("kg.lsp.highlight") then
-              return true
-            end
             vim.lsp.buf.clear_references()
             vim.api.nvim_clear_autocmds({ group = hl_augroup, buffer = _args.buf })
           end,
@@ -226,7 +218,7 @@ do
 
   cmd("LspAttach", {
     desc = "LSP: Complete",
-    group = vim.api.nvim_create_augroup("kg.lsp.complete", { clear = true }),
+    group = vim.api.nvim_create_augroup("kg.lsp.complete", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
       if client:supports_method(methods.textDocument_completion) then
@@ -242,10 +234,9 @@ do
 
   cmd("LspAttach", {
     desc = "LSP: Format",
-    group = vim.api.nvim_create_augroup("kg.lsp.format", { clear = true }),
+    group = vim.api.nvim_create_augroup("kg.lsp.format", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      local cached_formatexpr = vim.bo[args.buf].formatexpr
       vim.bo[args.buf].formatexpr = "v:lua.vim.lsp.formatexpr"
       if
         not client:supports_method(methods.textDocument_willSaveWaitUntil)
@@ -256,11 +247,6 @@ do
           group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", { clear = false }),
           buffer = args.buf,
           callback = function()
-            -- If 'kg.lsp.format' group has been clear/delete, this autocmds also should be deleted
-            if not has_group("kg.lsp.format") then
-              vim.bo[args.buf].formatexpr = cached_formatexpr
-              return true
-            end
             vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
           end,
         })
