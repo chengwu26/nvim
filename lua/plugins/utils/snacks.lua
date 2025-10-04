@@ -104,28 +104,39 @@ return {
       vim.print = _G.dd
 
       -- [[ LSP ]]
-      local method = vim.lsp.protocol.Methods
-      require("modules.lsp").setup({
-        rhs = {
-          [method.textDocument_definition] = Snacks.picker.lsp_definitions,
-          [method.textDocument_declaration] = Snacks.picker.lsp_declarations,
-          [method.textDocument_implementation] = Snacks.picker.lsp_implementations,
-          [method.textDocument_references] = Snacks.picker.lsp_references,
-          [method.textDocument_documentSymbol] = Snacks.picker.lsp_symbols,
-          [method.textDocument_typeDefinition] = Snacks.picker.lsp_type_definitions,
-          [method.workspace_symbol] = Snacks.picker.lsp_workspace_symbols,
-        },
-        progress_callback = wrapper_lsp_progress_callback(),
+      vim.lsp.buf.definition = Snacks.picker.lsp_definitions
+      vim.lsp.buf.declaration = Snacks.picker.lsp_declarations
+      vim.lsp.buf.implementation = Snacks.picker.lsp_implementations
+      vim.lsp.buf.references = Snacks.picker.lsp_references
+      vim.lsp.buf.document_symbol = Snacks.picker.lsp_symbols
+      vim.lsp.buf.type_definition = Snacks.picker.lsp_type_definitions
+      vim.lsp.buf.workspace_symbol = Snacks.picker.lsp_workspace_symbols
+
+      vim.api.nvim_create_autocmd("LspProgress", {
+        desc = "LSP: Show lsp progress",
+        callback = wrapper_lsp_progress_callback(),
       })
     end,
 
     keys = {
       --[[ Picker ]]
       -- Top Pickers & Explorer
-      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      {
+        "<leader><space>",
+        function() Snacks.picker.smart() end,
+        desc = "Smart Find Files",
+      },
       { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
-      { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
-      { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
+      {
+        "<leader>:",
+        function() Snacks.picker.command_history() end,
+        desc = "Command History",
+      },
+      {
+        "<leader>n",
+        function() Snacks.picker.notifications() end,
+        desc = "Notification History",
+      },
       { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
       -- find
       {
@@ -178,8 +189,16 @@ return {
       { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
       -- { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
       -- scratch
-      { "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
-      { "<leader>S", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+      {
+        "<leader>.",
+        function() Snacks.scratch() end,
+        desc = "Toggle Scratch Buffer",
+      },
+      {
+        "<leader>S",
+        function() Snacks.scratch.select() end,
+        desc = "Select Scratch Buffer",
+      },
       -- todo
       ---@diagnostic disable-next-line: undefined-field
       { "<leader>st", function() Snacks.picker.todo_comments() end, desc = "Todo" },

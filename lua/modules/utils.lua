@@ -12,6 +12,14 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
   M.env = "WSL" -- In WSL
 end
 
+--- Return `true` if the _group_ exist and have any autocmd belongs this group.
+---@param group string|integer
+---@return boolean
+M.has_augroup = function(group)
+  local ok, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group })
+  return ok and #autocmds > 0
+end
+
 -- [[ Tmux Navigation ]]
 do
   --- Seamless navigation with `tmux pane`

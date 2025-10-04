@@ -9,7 +9,15 @@
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
-require("config.lsp")
+
+vim.lsp.enable({
+  "lua_ls",
+  "pyright",
+  "rust_analyzer",
+  "harper_ls",
+  "jsonls",
+  "marksman",
+})
 
 -- Enable enhanced feature
 local utils = require("modules.utils")

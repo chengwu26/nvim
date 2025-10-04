@@ -32,7 +32,7 @@ return {
     cmdline = { enabled = false },
   },
   init = function()
-    -- Disable LSP completion
-    require("modules.lsp").setup({ auto_complete = false })
+    -- Disable native LSP completion
+    vim.api.nvim_clear_autocmds({ group = "kg.lsp.complete" })
   end,
 }
