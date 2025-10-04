@@ -34,7 +34,7 @@ opt.cursorline = true
 opt.guifont = "Maple Mono NF CN:h12"
 opt.signcolumn = "yes:1"
 opt.termguicolors = true
-opt.winborder = "single"
+opt.winborder = "none"
 -- scroll
 opt.scrolloff = 4
 opt.sidescrolloff = 8
