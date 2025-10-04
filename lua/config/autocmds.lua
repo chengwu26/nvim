@@ -76,6 +76,12 @@ do
       rhs = proxy.code_action,
       desc = "Code Action",
     },
+    [methods.textDocument_signatureHelp] = {
+      mode = "i",
+      lhs = "<C-s>",
+      rhs = proxy.signature_help,
+      desc = "Show Signature Help",
+    },
     [methods.textDocument_references] = {
       mode = "n",
       lhs = "grr",
@@ -87,18 +93,6 @@ do
       lhs = "gri",
       rhs = proxy.implementation,
       desc = "Goto Implementation",
-    },
-    [methods.textDocument_documentSymbol] = {
-      mode = "n",
-      lhs = "gs",
-      rhs = proxy.document_symbol,
-      desc = "List Buffer Symbol",
-    },
-    [methods.textDocument_signatureHelp] = {
-      mode = "i",
-      lhs = "<C-s>",
-      rhs = proxy.signature_help,
-      desc = "Show Signature Help",
     },
     [methods.textDocument_definition] = {
       mode = "n",
@@ -114,9 +108,15 @@ do
     },
     [methods.textDocument_typeDefinition] = {
       mode = "n",
-      lhs = "grt",
+      lhs = "grd",
       rhs = proxy.type_definition,
       desc = "Goto Type Definition",
+    },
+    [methods.textDocument_documentSymbol] = {
+      mode = "n",
+      lhs = "gs",
+      rhs = proxy.document_symbol,
+      desc = "List Buffer Symbol",
     },
     [methods.workspace_symbol] = {
       mode = "n",
@@ -124,10 +124,34 @@ do
       rhs = proxy.workspace_symbol,
       desc = "List Workspace Symbol",
     },
+    [methods.callHierarchy_incomingCalls] = {
+      mode = "n",
+      lhs = "grc",
+      rhs = proxy.incoming_calls,
+      desc = "List Incoming Calls",
+    },
+    [methods.callHierarchy_outgoingCalls] = {
+      mode = "n",
+      lhs = "grC",
+      rhs = proxy.outgoing_calls,
+      desc = "List Outgoing Calls",
+    },
+    [methods.typeHierarchy_supertypes] = {
+      mode = "n",
+      lhs = "grt",
+      rhs = function() vim.lsp.buf.typehierarchy("supertypes") end,
+      desc = "List Supertypes",
+    },
+    [methods.typeHierarchy_subtypes] = {
+      mode = "n",
+      lhs = "grT",
+      rhs = function() vim.lsp.buf.typehierarchy("subtypes") end,
+      desc = "List Subtypes",
+    },
   }
 
   cmd("LspAttach", {
-    desc = "LSP: Setup keymap",
+    desc = "LSP: Keymap",
     group = vim.api.nvim_create_augroup("kg.lsp.keymap", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
@@ -153,7 +177,7 @@ do
               { bufnr = args.buf }
             )
           end,
-          { desc = "LSP: Toggle Inlay Hint" }
+          { desc = "LSP: Toggle Inlay Hint", buffer = args.buf }
         )
       end
     end,
@@ -221,6 +245,8 @@ do
     group = vim.api.nvim_create_augroup("kg.lsp.format", { clear = true }),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+      local cached_formatexpr = vim.bo[args.buf].formatexpr
+      vim.bo[args.buf].formatexpr = "v:lua.vim.lsp.formatexpr"
       if
         not client:supports_method(methods.textDocument_willSaveWaitUntil)
         and client:supports_method(methods.textDocument_formatting)
@@ -232,6 +258,7 @@ do
           callback = function()
             -- If 'kg.lsp.format' group has been clear/delete, this autocmds also should be deleted
             if not has_group("kg.lsp.format") then
+              vim.bo[args.buf].formatexpr = cached_formatexpr
               return true
             end
             vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
@@ -240,4 +267,17 @@ do
       end
     end,
   })
+
+  -- cmd("LspAttach", {
+  --   desc = "LSP: Fold",
+  --   callback = function(args)
+  --     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+  --     if client:supports_method(methods.textDocument_foldingRange) then
+  --       local win = vim.api.nvim_get_current_win()
+  --       vim.wo[win][0].foldmethod = "expr"
+  --       vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+  --       vim.wo[win][0].foldtext = "v:lua.vim.lsp.foldtext()"
+  --     end
+  --   end,
+  -- })
 end
