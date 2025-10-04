@@ -110,9 +110,9 @@ local default_opts = {
 -- But each modification will inherit the last configuration
 --
 -- `opts`:
---   `auto_completion` (boolean): enable LSP auto completion, (default true)
---   `progress` (function): custom LSP progress notify
---   `keys` (table<vim.lsp.protocol.Methods, function>): custom LSP method behavior
+--   `auto_complete` (boolean): enable LSP auto completion, (default true)
+--   `progress_callback` (function): custom LSP progress notify
+--   `rhs` (table<vim.lsp.protocol.Methods, function>): custom LSP method behavior
 --
 -- Note: The setup of keymap and autocmd depends on `LspAttach` event. Don't call
 -- this function in loads the plugin with the `LspAttach` event as conditional,
