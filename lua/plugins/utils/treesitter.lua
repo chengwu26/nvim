@@ -12,7 +12,8 @@ return {
     build = ":TSUpdate",
     branch = "main",
     config = function()
-      require("nvim-treesitter").install(CODE_CONF_FT):wait(300000)
+      local ensure_install = vim.list_extend(vim.deepcopy(CODE_CONF_FT), { "regex" })
+      require("nvim-treesitter").install(ensure_install):wait(300000)
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = CODE_CONF_FT,
