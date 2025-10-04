@@ -26,7 +26,7 @@ map("x", "<C-s>", ":s/")
 -- Window operation
 map("n", "\\", "<CMD>sp<CR>", { desc = "Split window horizontally" })
 map("n", "|", "<CMD>vsp<CR>", { desc = "Split window vertically" })
-local smart_navigation = require("modules.utils").smart_navigation
+local smart_navigation = require("utils").smart_navigation
 -- stylua: ignore start
 map({ "n", "t" }, "<C-h>", function() smart_navigation("h") end, { desc = "Focus the left window/pane" })
 map({ "n", "t" }, "<C-l>", function() smart_navigation("l") end, { desc = "Focus the right window/pane" })

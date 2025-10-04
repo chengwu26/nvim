@@ -20,8 +20,8 @@ vim.lsp.enable({
 })
 
 -- Enable enhanced feature
-local utils = require("modules.utils")
-local features = require("modules.features")
+local utils = require("utils")
+local features = require("features")
 
 if utils.env == "WSL" then
   features.wsl_clipboard()

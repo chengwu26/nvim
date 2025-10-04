@@ -9,7 +9,6 @@ Base on [lazy.nvim](https://lazy.folke.io/)
 │   ├── keymaps.lua
 │   ├── lsp.lua
 │   └── options.lua
-├── modules/            custom modules
 └── plugins/
     ├── init.lua        setup lazy.nvim
     ├── dev/            development plugin

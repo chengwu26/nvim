@@ -3,7 +3,7 @@
 --- Provide some enhanced features
 ---
 
-local utils = require("modules.utils")
+local utils = require("utils")
 
 local M = {}
 
