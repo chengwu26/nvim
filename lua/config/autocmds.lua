@@ -241,7 +241,7 @@ do
       then
         cmd("BufWritePre", {
           desc = "LSP: Auto-format on save",
-          group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", { clear = false }),
+          group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", {}),
           buffer = args.buf,
           callback = function()
             vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
