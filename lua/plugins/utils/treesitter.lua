@@ -13,10 +13,11 @@ return {
     branch = "main",
     config = function()
       local ensure_install = vim.list_extend(vim.deepcopy(CODE_CONF_FT), { "regex" })
-      require("nvim-treesitter").install(ensure_install):wait(300000)
+      local ts = require("nvim-treesitter")
+      ts.install(ensure_install):wait(300000)
 
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = CODE_CONF_FT,
+        pattern = ts.get_installed(),
         callback = function(args)
           vim.treesitter.start(args.buf)
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
@@ -32,9 +33,10 @@ return {
     opts = {},
     config = function(_, opts)
       require("nvim-treesitter-textobjects").setup(opts)
+      local ts = require("nvim-treesitter")
 
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = CODE_CONF_FT,
+        pattern = ts.get_installed(),
         callback = function(args)
           local map = vim.keymap.set
           local ts_select = require("nvim-treesitter-textobjects.select").select_textobject
