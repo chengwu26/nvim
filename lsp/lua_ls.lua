@@ -45,7 +45,7 @@ return {
           global = "Opened",
           luadoc = "Opened",
           redefined = "Opened",
-          type_check = "Opened",
+          ["type-check"] = "Opened",
           unbalanced = "Opened",
           unused = "Opened",
         },
