@@ -58,7 +58,6 @@ cmd("FileType", {
 --  ```
 --
 do
-  local has_group = require("utils").has_augroup
   local proxy = setmetatable({}, {
     __index = function(_, key)
       return function(...) return vim.lsp.buf[key](...) end

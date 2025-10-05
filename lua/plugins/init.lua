@@ -25,7 +25,7 @@ if not vim.uv.fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -38,7 +38,7 @@ local spec = {
   require("plugins.ui"),
   require("plugins.utils"),
 }
-if ENABLE_DEV or os.getenv("DEV_ENV") then
+if ENABLE_DEV or os.getenv("DEV_ENV") then ---@diagnostic disable-line
   table.insert(spec, require("plugins.dev"))
 end
 

@@ -35,31 +35,29 @@ return {
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = CODE_CONF_FT,
-        callback = function(ev)
+        callback = function(args)
           local map = vim.keymap.set
           local ts_select = require("nvim-treesitter-textobjects.select").select_textobject
           local mode = { "x", "o" }
-          --stylua: ignore start
           map(mode, "af", function()
             ts_select("@function.outer", "textobjects")
-          end, { buffer = ev.buf, desc = "A function" })
+          end, { buffer = args.buf, desc = "A function" })
 
           map(mode, "if", function()
             ts_select("@function.inner", "textobjects")
-          end, { buffer = ev.buf, desc = "Inner function" })
+          end, { buffer = args.buf, desc = "Inner function" })
 
           map(mode, "ac", function()
             ts_select("@class.outer", "textobjects")
-          end, { buffer = ev.buf, desc = "A class" })
+          end, { buffer = args.buf, desc = "A class" })
 
           map(mode, "ic", function()
             ts_select("@class.inner", "textobjects")
-          end, { buffer = ev.buf, desc = "Inner class" })
+          end, { buffer = args.buf, desc = "Inner class" })
 
           map(mode, "as", function()
             ts_select("@local.scope", "locals")
-          end, { buffer = ev.buf, desc = "A scope" })
-          --stylua: ignore end
+          end, { buffer = args.buf, desc = "A scope" })
         end,
       })
     end,

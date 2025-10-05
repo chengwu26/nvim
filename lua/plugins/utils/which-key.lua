@@ -25,7 +25,7 @@ return {
     preset = "helix",
     keys = {
       scroll_down = "<c-j>", -- Binding to scroll down inside the popup
-      scroll_up = "<c-k>", -- Binding to scroll up inside the popup
+      scroll_up = "<c-k>",   -- Binding to scroll up inside the popup
     },
     ---@type wk.Spec
     spec = {
@@ -34,8 +34,7 @@ return {
       { "<leader>b", group = "Buffer" },
       { "<leader>g", group = "Git" },
       { "<leader>f", group = "Find" },
-      { "gr", group = "More LSP" },
-      { "<leader>c", group = "Cellular Automaton" },
+      { "gr",        group = "More LSP" },
     },
   },
 }
