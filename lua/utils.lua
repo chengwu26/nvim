@@ -1,8 +1,3 @@
----@brief
----
---- Provide some enhanced features
----
-
 local M = {}
 
 --- Current environment
@@ -18,6 +13,26 @@ end
 M.has_augroup = function(group)
   local ok, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group })
   return ok and #autocmds > 0
+end
+
+--- Delete all maching augroup and inside autocmds.
+---@param pattern string
+---@return integer # Number of deleted groups
+M.del_matching_group = function(pattern)
+  local matchs = {}
+  local autocmds = vim.api.nvim_get_autocmds({})
+
+  for _, cmd in ipairs(autocmds) do
+    local name = cmd.group_name
+    if name and not vim.tbl_contains(matchs, cmd.group) and string.match(name, pattern) then
+      table.insert(matchs, cmd.group)
+    end
+  end
+
+  for _, group in ipairs(matchs) do
+    vim.api.nvim_del_augroup_by_id(group)
+  end
+  return #matchs
 end
 
 -- [[ Tmux Navigation ]]

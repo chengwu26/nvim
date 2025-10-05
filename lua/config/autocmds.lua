@@ -51,13 +51,10 @@ cmd("FileType", {
 -- Complete, Format and Highlight:
 --  They also can be disable through
 --  ```lua
---  vim.api.nvim_clear_autocmds{ group = "kg.lsp.complete" }
---
---  vim.api.nvim_clear_autocmds{ group = "kg.lsp.format" }
---  vim.api.nvim_clear_autocmds{ group = "kg.lsp.format.on_save" }
---
---  vim.api.nvim_clear_autocmds{ group = "kg.lsp.highlight.on" }
---  vim.api.nvim_clear_autocmds{ group = "kg.lsp.highlight.off" }
+--  local utils = require("utils")
+--  utils.del_matching_group(kg%.lsp%.complete) -- disable complete
+--  utils.del_matching_group(kg%.lsp%.format)   -- disable format
+--  utils.del_matching_group(kg%.lsp%.highlight) -- disable highlight
 --  ```
 --
 do
@@ -239,8 +236,8 @@ do
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
       vim.bo[args.buf].formatexpr = "v:lua.vim.lsp.formatexpr"
       if
-        not client:supports_method(methods.textDocument_willSaveWaitUntil)
-        and client:supports_method(methods.textDocument_formatting)
+          not client:supports_method(methods.textDocument_willSaveWaitUntil)
+          and client:supports_method(methods.textDocument_formatting)
       then
         cmd("BufWritePre", {
           desc = "LSP: Auto-format on save",

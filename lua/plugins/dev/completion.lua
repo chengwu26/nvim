@@ -33,6 +33,6 @@ return {
   },
   init = function()
     -- Disable native LSP completion
-    vim.api.nvim_clear_autocmds({ group = "kg.lsp.complete" })
+    require("utils").del_matching_group("kg%.lsp%.complete")
   end,
 }
