@@ -8,5 +8,4 @@ return {
   require("plugins.dev.markdown"), -- markdown preview in browser
   require("plugins.dev.completion"),
   require("plugins.dev.format"),
-  require("plugins.dev.lazydev"),
 }
