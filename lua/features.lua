@@ -57,7 +57,7 @@ do
   --- Note:
   ---   1. Only support the x86 and x64 platform.
   ---   2. Only can call this function in WSL environment.
-  M.wsl_clipboard = function()
+ function M.wsl_clipboard ()
     assert(utils.env == "WSL", "Only for WSL")
 
     -- `win32yank` install directory
@@ -79,7 +79,7 @@ end
 do
   --- Install im-select
   ---@return nil|string
-  local install_im_select = function()
+  local function install_im_select()
     assert(utils.env == "Windows" or utils.env == "WSL")
     local install_file = vim.fn.stdpath("data") .. "/im-select/im-select.exe"
     local url = "https://github.com/daipeihust/im-select/raw/master/win/out/x86/im-select.exe"
@@ -108,7 +108,7 @@ do
   --- such as entering or leaving insert mode or exiting Neovim.
   ---
   --- Note: Only for Windows and WSL
-  M.smart_input_method = function()
+ function M.smart_input_method ()
     assert(utils.env == "Windows" or utils.env == "WSL", "Only support Windows and WSL")
 
     local im_select = vim.fn.stdpath("data") .. "/im-select"

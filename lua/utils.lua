@@ -10,7 +10,7 @@ end
 --- Return `true` if the _group_ exist and have any autocmd belongs this group.
 ---@param group string|integer
 ---@return boolean
-M.has_augroup = function(group)
+function M.has_augroup(group)
   local ok, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group })
   return ok and #autocmds > 0
 end
@@ -18,7 +18,7 @@ end
 --- Delete all maching augroup and inside autocmds.
 ---@param pattern string
 ---@return integer # Number of deleted groups
-M.del_matching_group = function(pattern)
+function M.del_matching_group(pattern)
   local matchs = {}
   local autocmds = vim.api.nvim_get_autocmds({})
 
@@ -39,7 +39,7 @@ end
 do
   --- Seamless navigation with `tmux pane`
   ---@param direction 'h'|'j'|'k'|'l'
-  M.smart_navigation = function(direction)
+  function M.smart_navigation(direction)
     local curr_wid = vim.api.nvim_get_current_win()
     local curr_win_conf = vim.api.nvim_win_get_config(curr_wid)
     if curr_win_conf.relative == "" then
@@ -89,7 +89,7 @@ do
     end
   end
 
-  M.foldtext = function()
+  function M.foldtext()
     local start_line = vim.fn.getline(vim.v.foldstart)
     local end_line = vim.fn.getline(vim.v.foldend)
 
