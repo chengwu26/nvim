@@ -2,7 +2,7 @@
 
 ---@type LazySpec
 return {
-  "numToStr/Comment.nvim",
-  ft = CODE_CONF_FT,
+  "folke/ts-comments.nvim",
+  event = "VeryLazy",
   opts = {},
 }
