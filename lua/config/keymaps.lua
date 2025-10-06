@@ -5,6 +5,9 @@
 --- If you want to see plugin-related keymaps, they are in the
 --- plugin's own configuration, go to `lua/plugins/` and look for them.
 ---
+--- And also have some default keymaps are dynamically defined, see
+--- the `autocomds.lua`
+---
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -14,7 +17,7 @@ local map = vim.keymap.set
 map("i", "jk", "<ESC>", { silent = true })
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
 map("x", "/", "<ESC>/\\%V", { desc = "Search within Visual selection" })
-map("n", "L", vim.diagnostic.open_float, { desc = "Open Diagnostic" })
+map("n", "L", vim.diagnostic.open_float, { desc = "Show Diagnostic" })
 -- More consistent behavior of j/k when warp is set
 map({ "n", "x" }, "j", "v:count ? 'j' : 'gj'", { expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count ? 'k' : 'gk'", { expr = true, silent = true })
@@ -47,7 +50,8 @@ map("n", "<leader>p", "\"+p", { desc = "Put from clipboard" })
 map("n", "<leader>tw", "<CMD>set invwrap<CR>", { desc = "Toggle Wrap" })
 map("n", "<leader>tn", "<CMD>set invrnu<CR>", { desc = "Toggle Relative Number" })
 
--- Remove default global LSP keymaps
+-- Remove some default global keymaps
+pcall(vim.keymap.del, "n", "<C-w>d")
 pcall(vim.keymap.del, "n", "grn")
 pcall(vim.keymap.del, { "n", "v" }, "gra")
 pcall(vim.keymap.del, "n", "grr")
