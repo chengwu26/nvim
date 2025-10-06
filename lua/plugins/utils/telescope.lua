@@ -13,6 +13,7 @@ return {
     { "<leader>/",        function() require(blt).live_grep() end,                 desc = "Grep" },
     { "<leader>/",        function() require(blt).grep_string() end,               desc = "Search it",         mode = "v" },
     { "<leader>ff",       function() require(blt).find_files() end,                desc = "Files" },
+    { "<leader>fg",       function() require(blt).git_files() end,                 desc = "Git files" },
     { "<leader>fb",       function() require(blt).current_buffer_fuzzy_find() end, desc = "This buffer" },
     { "<leader>fs",       function() require(blt).symbols() end,                   desc = "Symbols" },
     { "<leader>gc",       function() require(blt).git_bcommits() end,              desc = "Buffer's commits" },
