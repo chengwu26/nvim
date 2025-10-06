@@ -58,6 +58,19 @@ cmd("FileType", {
 --  ```
 --
 do
+  ---@class LspProxy
+  ---@field rename fun()
+  ---@field code_action fun()
+  ---@field signature_help fun()
+  ---@field references fun()
+  ---@field implementation fun()
+  ---@field definition fun()
+  ---@field declaration fun()
+  ---@field type_definition fun()
+  ---@field document_symbol fun()
+  ---@field workspace_symbol fun()
+  ---@field incoming_calls fun()
+  ---@field outgoing_calls fun()
   local proxy = setmetatable({}, {
     __index = function(_, key)
       return function(...) return vim.lsp.buf[key](...) end

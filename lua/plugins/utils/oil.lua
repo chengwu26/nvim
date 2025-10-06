@@ -8,7 +8,6 @@ return {
     "stevearc/oil.nvim",
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    ---@module 'oil'
     ---@type oil.SetupOpts
     opts = {
       keymaps = {

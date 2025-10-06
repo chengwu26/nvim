@@ -3,7 +3,6 @@
 ---@type LazySpec
 return {
   "hat0uma/csvview.nvim",
-  ---@module "csvview"
   ---@type CsvView.Options
   cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
   ft = { "csv", "tsv" },
