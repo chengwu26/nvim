@@ -8,4 +8,5 @@ return {
   require("plugins.utils.todo-comments"), -- support todo comments
   require("plugins.utils.autopairs"),     -- bracket pair
   require("plugins.utils.csvview"),       -- improve csv/tsv
+  require("plugins.utils.comment"),       -- (un)comment code
 }
