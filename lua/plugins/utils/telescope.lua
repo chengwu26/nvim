@@ -20,6 +20,7 @@ return {
     { "<leader>gb",       function() require(blt).git_branches() end,              desc = "Branches" },
     { "<leader>gt",       function() require(blt).git_status() end,                desc = "Status" },
     { "<leader><leader>", function() require(blt).resume() end,                    desc = "Resume last picker" },
+    { "<leader>d",        function() require(blt).diagnostics() end,               desc = "List diagnostics" },
   },
   opts = {
     defaults = {
