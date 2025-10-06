@@ -16,8 +16,13 @@ return {
       local ts = require("nvim-treesitter")
       ts.install(ensure_install):wait(300000)
 
+      local ft = {}
+      for _, lang in ipairs(require("nvim-treesitter").get_installed()) do
+        vim.list_extend(ft, vim.treesitter.language.get_filetypes(lang))
+      end
+
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = ts.get_installed(),
+        pattern = ft,
         callback = function(args)
           vim.treesitter.start(args.buf)
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
@@ -27,16 +32,21 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     branch = "main",
-    ft = CODE_CONF_FT,
+    ft = function()
+      local ft = {}
+      for _, lang in ipairs(require("nvim-treesitter").get_installed()) do
+        vim.list_extend(ft, vim.treesitter.language.get_filetypes(lang))
+      end
+      return ft
+    end,
     ---@type TSTextObjects.UserConfig
     opts = {},
     config = function(_, opts)
       require("nvim-treesitter-textobjects").setup(opts)
-      local ts = require("nvim-treesitter")
 
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = ts.get_installed(),
         callback = function(args)
           local map = vim.keymap.set
           local ts_select = require("nvim-treesitter-textobjects.select").select_textobject
