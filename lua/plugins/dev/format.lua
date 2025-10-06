@@ -10,7 +10,7 @@ return {
       lsp_format = "fallback",
     },
     formatters_by_ft = {
-      lua = { "stylua" },
+      -- lua = { "stylua" },
       -- python = { "isort", "black" }, -- TODO: fmt
       rust = { "rustfmt" },
     },
