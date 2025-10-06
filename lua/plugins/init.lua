@@ -44,6 +44,11 @@ end
 
 require("lazy").setup({
   spec = spec,
-  install = { colorscheme = { "habamax" } },
+  install = { colorscheme = { vim.g.colorscheme } },
   checker = { enabled = true },
+  defaults = { version = false },
+  rocks = { enabled = false },
+  custom_keys = {
+    ["<localleader>l"] = false
+  }
 })
