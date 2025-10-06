@@ -14,7 +14,6 @@ vim.lsp.enable({
   "lua_ls",
   "pyright",
   "rust_analyzer",
-  "harper_ls",
   "jsonls",
   "marksman",
 })
