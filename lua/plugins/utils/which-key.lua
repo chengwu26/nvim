@@ -30,10 +30,9 @@ return {
     ---@type wk.Spec
     spec = {
       { "<leader>t", group = "Toggle" },
-      { "<leader>s", group = "Search" },
       { "<leader>b", group = "Buffer" },
       { "<leader>g", group = "Git" },
-      { "<leader>f", group = "Find" },
+      { "<leader>f", group = "Fuzzy find" },
       { "gr",        group = "More LSP" },
     },
   },
