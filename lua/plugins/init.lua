@@ -35,11 +35,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local spec = {
-  require("plugins.ui"),
-  require("plugins.utils"),
+  { import = "plugins.utils" },
+  { import = "plugins.ui" },
 }
 if ENABLE_DEV or os.getenv("DEV_ENV") then ---@diagnostic disable-line
-  table.insert(spec, require("plugins.dev"))
+  table.insert(spec, { import = "plugins.dev" })
 end
 
 require("lazy").setup({
@@ -49,6 +49,6 @@ require("lazy").setup({
   defaults = { version = false },
   rocks = { enabled = false },
   custom_keys = {
-    ["<localleader>l"] = false
-  }
+    ["<localleader>l"] = false,
+  },
 })
