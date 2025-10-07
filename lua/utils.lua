@@ -19,6 +19,7 @@ end
 ---@param pattern string
 ---@return integer # Number of deleted groups
 function M.del_matching_group(pattern)
+  ---@type integer[]
   local matchs = {}
   local autocmds = vim.api.nvim_get_autocmds({})
 
@@ -65,6 +66,7 @@ do
   local function append_highlighted_segments(result, line, row, col)
     col = col or 0
     local segment = ""
+    ---@type string
     local current_hl
 
     for i = 1, #line do
