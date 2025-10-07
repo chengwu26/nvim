@@ -1,8 +1,4 @@
 --- Git integrate
----
---- NOTE: (DEPENDENCE)
---- See also https://github.com/lewis6991/gitsigns.nvim#-requirements
----
 
 ---@type LazySpec
 return {
@@ -23,44 +19,38 @@ return {
       map("n", "<leader>gd", gitsigns.diffthis, "Diff this")
 
       -- Navigation
-      map("n", "]c", function()
-        if vim.wo.diff then
-          vim.cmd.normal({ "]c", bang = true })
-        else
-          gitsigns.nav_hunk("next")
-        end
-      end, "Next Hunk")
-
-      map("n", "[c", function()
-        if vim.wo.diff then
-          vim.cmd.normal({ "[c", bang = true })
-        else
-          gitsigns.nav_hunk("prev")
-        end
-      end, "Prev Hunk")
+      ---@param lhs string
+      ---@param direction "first"|"last"|"prev"|"next"
+      ---@param desc string
+      local navi_map = function(lhs, direction, desc)
+        map("n", lhs, function()
+          if vim.wo.diff then
+            vim.cmd.normal({ lhs, bang = true })
+          else
+            gitsigns.nav_hunk(direction)
+          end
+        end, desc)
+      end
+      navi_map("]h", "next", "Next Hunk")
+      navi_map("]H", "last", "Last Hunk")
+      navi_map("[h", "prev", "Prev Hunk")
+      navi_map("[H", "first", "First Hunk")
 
       -- Action
       map("n", "<leader>gs", gitsigns.stage_hunk, "Stage Hunk")
       map("n", "<leader>gr", gitsigns.reset_hunk, "Reset Hunk")
-      map(
-        "v",
-        "<leader>gs",
+      map("v", "<leader>gs",
         function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
-        "Stage These Lines"
-      )
-      map(
-        "v",
-        "<leader>gr",
+        "Stage These Lines")
+      map("v", "<leader>gr",
         function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
-        "Reset These Lines"
-      )
+        "Reset These Lines")
 
       map("n", "<leader>gS", gitsigns.stage_buffer, "Stage Buffer")
       map("n", "<leader>gR", gitsigns.reset_buffer, "Reset Buffer")
+      map("n", "<leader>gb", gitsigns.blame_line, "Blame Line")
       map("n", "<leader>gp", gitsigns.preview_hunk, "Preview Hunk")
       map("n", "<leader>gi", gitsigns.preview_hunk_inline, "Preview Inline")
-
-      -- map("n", "<leader>gB", function() gitsigns.blame_line({ full = true }) end, "Blame Line (Full)")
 
       -- toggle
       map("n", "<leader>tW", gitsigns.toggle_word_diff, "Toggle Word Diff")
