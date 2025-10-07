@@ -237,6 +237,8 @@ do
         end
         client.server_capabilities.completionProvider.triggerCharacters = chars
         vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+        vim.keymap.set("i", "<Tab>", 'pumvisible() ? "<C-y>" : "<Tab>"',
+          { expr = true, noremap = true })
       end
     end,
   })
