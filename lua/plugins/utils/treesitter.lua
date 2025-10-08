@@ -12,7 +12,8 @@ return {
     build = ":TSUpdate",
     branch = "main",
     config = function()
-      local ensure_install = vim.list_extend(vim.deepcopy(CODE_CONF_FT), { "regex" })
+      local ensure_install = { "regex", "markdown_inline", "vimdoc", "vim" }
+      vim.list_extend(ensure_install, CODE_CONF_FT)
       local ts = require("nvim-treesitter")
       ts.install(ensure_install):wait(300000)
 
