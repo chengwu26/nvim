@@ -1,4 +1,6 @@
---- Improve csv/tsv
+---
+--- Improve csv/tsv file type
+---
 
 ---@type LazySpec
 return {

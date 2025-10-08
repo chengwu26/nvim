@@ -1,7 +1,5 @@
---- Tree-sitter configurations and abstraction layer.
 ---
---- NOTE: (DEPENDENCE)
---- See also https://github.com/nvim-treesitter/nvim-treesitter/tree/main?tab=readme-ov-file#requirements
+--- Tree-sitter configurations and abstraction layer.
 ---
 
 ---@type LazySpec[]

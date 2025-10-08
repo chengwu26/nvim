@@ -1,7 +1,9 @@
+---
+--- Develop tool manager
+---
+
 ---@type LazySpec
 return {
-  -- NOTE: (DEPENDENCE)
-  --  See also https://github.com/mason-org/mason.nvim?tab=readme-ov-file#requirements
   "mason-org/mason.nvim",
   cmd = "Mason",
   init = function()

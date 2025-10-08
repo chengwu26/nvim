@@ -1,4 +1,3 @@
----@brief
 ---
 --- Highlight selected line
 ---

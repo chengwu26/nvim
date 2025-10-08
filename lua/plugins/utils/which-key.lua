@@ -1,9 +1,5 @@
----@brief
 ---
 --- Showing available keybindings in a popup as you type.
----
---- Keybindings should define in global keymap file(config/keymap.lua)
---- or plugin's configuration file(e.g plugins/ui/tabline.lua)
 ---
 
 -- Tip: 'z=' show spelling suggestions

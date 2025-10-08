@@ -1,3 +1,7 @@
+---
+--- Fuzzy find and picker
+---
+
 local blt = "telescope.builtin"
 
 ---@type LazySpec

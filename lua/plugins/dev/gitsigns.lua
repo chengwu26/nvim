@@ -1,4 +1,6 @@
+---
 --- Git integrate
+---
 
 ---@type LazySpec
 return {

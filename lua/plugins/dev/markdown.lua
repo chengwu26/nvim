@@ -1,10 +1,8 @@
---- Preview markdown in browser.
 ---
---- NOTE: (DEPENDENCE)
---- npm, yarn
---- See also https://github.com/iamcco/markdown-preview.nvim?tab=readme-ov-file#installation--usage
+--- Preview markdown in browser.
+--- Install with yarn
+---
 
--- Install with yarn or npm
 ---@type LazySpec
 return {
   "iamcco/markdown-preview.nvim",

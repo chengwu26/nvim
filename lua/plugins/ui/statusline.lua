@@ -1,4 +1,6 @@
+---
 --- Fancy status bar
+---
 
 ---@type LazySpec
 return {
