@@ -37,7 +37,7 @@ local spec = {
   { import = "plugins.utils" },
   { import = "plugins.ui" },
 }
-if ENABLE_DEV or os.getenv("DEV_ENV") then ---@diagnostic disable-line
+if require("utils").is_dev then ---@diagnostic disable-line
   table.insert(spec, { import = "plugins.dev" })
 end
 

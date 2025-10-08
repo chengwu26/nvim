@@ -7,6 +7,8 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
   M.env = "WSL" -- In WSL
 end
 
+M.is_dev = ENABLE_DEV or os.getenv("DEV_ENV") ---@diagnostic disable-line
+
 --- Return `true` if the _group_ exist and have any autocmd belongs this group.
 ---@param group string|integer
 ---@return boolean

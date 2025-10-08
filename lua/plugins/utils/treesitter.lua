@@ -2,6 +2,7 @@
 --- Tree-sitter configurations and abstraction layer.
 ---
 
+local utils = require("utils")
 ---@type LazySpec[]
 return {
   {
@@ -11,7 +12,9 @@ return {
     branch = "main",
     config = function()
       local ensure_install = { "regex", "markdown_inline", "vimdoc", "vim" }
-      vim.list_extend(ensure_install, CODE_CONF_FT)
+      if utils.is_dev then
+        vim.list_extend(ensure_install, CODE_CONF_FT)
+      end
       local ts = require("nvim-treesitter")
       ts.install(ensure_install):wait(300000)
 
