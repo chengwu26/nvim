@@ -7,16 +7,16 @@ Base on [lazy.nvim](https://lazy.folke.io/)
 ├── init.lua
 ├── lsp/                    lsp configuration
 └── lua/
-    ├── config/             core configuration(plugin-independent)
-    │   ├── autocmds.lua
-    │   ├── init.lua
-    │   ├── keymaps.lua
-    │   └── options.lua
-    ├── plugins/            all plugins place there
+    ├── core/               core configuration(plugin-independent)
+    │   ├── init.lua        load below files and enable custom features
+    │   ├── autocmds.lua    gloabl default autocmds
+    │   ├── keymaps.lua     gloabl default keymaps
+    │   └── options.lua     gloabl default options
+    ├── plugins/            plugins root directory
     │   ├── init.lua        setup lazy.nvim
-    │   ├── utils
-    │   ├── ui
-    │   └── dev
+    │   ├── utils/          utils plugins
+    │   ├── ui/             ui improved plugins
+    │   └── dev/            development plugins
     ├── features.lua        custom enhanced features module
     └── utils.lua           custom utils module
 ```

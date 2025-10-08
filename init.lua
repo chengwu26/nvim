@@ -34,5 +34,5 @@ CONF_FT = { "yaml", "toml", "json", "markdown", "markdown_inline", "vimdoc" }
 ---@type string[]
 CODE_CONF_FT = vim.list_extend(vim.deepcopy(CODE_FT), CONF_FT)
 
-require("config")
+require("core")
 require("plugins")

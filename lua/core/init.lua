@@ -6,9 +6,9 @@
 --- you should override them in the plugin's own configuration.
 ---
 
-require("config.options")
-require("config.keymaps")
-require("config.autocmds")
+require("core.options")
+require("core.keymaps")
+require("core.autocmds")
 
 vim.lsp.enable({
   "lua_ls",
