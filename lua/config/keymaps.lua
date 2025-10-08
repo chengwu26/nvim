@@ -18,6 +18,15 @@ map("i", "jk", "<ESC>", { silent = true })
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
 map("x", "/", "<ESC>/\\%V", { desc = "Search within Visual selection" })
 map("n", "L", vim.diagnostic.open_float, { desc = "Show Diagnostic" })
+-- Tabpage
+map("n", "<M-,>", "<CMD>tabprevious<CR>", { desc = "Prev Tab" })
+map("n", "<M-.>", "<CMD>tabnext<CR>", { desc = "Next Tab" })
+map("n", "<M-<>", "<CMD>-tabmove<CR>", { desc = "Move Tab to Left" })
+map("n", "<M->>", "<CMD>+tabmove<CR>", { desc = "Move Tab to Right" })
+map("n", "<leader>tt", function()
+  ---@diagnostic disable-next-line
+  vim.opt.showtabline = vim.opt.showtabline:get() == 0 and 1 or 0
+end, { desc = "Toggle Tabline" })
 -- More consistent behavior of j/k when warp is set
 map({ "n", "x" }, "j", "v:count ? 'j' : 'gj'", { expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count ? 'k' : 'gk'", { expr = true, silent = true })
