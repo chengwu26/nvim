@@ -195,21 +195,24 @@ do
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
       if client:supports_method(methods.textDocument_documentHighlight) then
         local hl_augroup = vim.api.nvim_create_augroup("kg.lsp.highlight.on", { clear = false })
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        cmd({ "CursorHold", "CursorHoldI" }, {
           buffer = args.buf,
           group = hl_augroup,
-          callback = vim.lsp.buf.document_highlight,
+          callback = function()
+            if client:is_stopped() then
+              return true
+            end
+            vim.lsp.buf.document_highlight()
+          end,
         })
-        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+        cmd({ "CursorMoved", "CursorMovedI" }, {
           buffer = args.buf,
           group = hl_augroup,
-          callback = vim.lsp.buf.clear_references,
-        })
-        vim.api.nvim_create_autocmd("LspDetach", {
-          group = vim.api.nvim_create_augroup("kg.lsp.highlight.off", {}),
-          callback = function(_args)
+          callback = function()
+            if client:is_stopped() then
+              return true
+            end
             vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds({ group = hl_augroup, buffer = _args.buf })
           end,
         })
       end
@@ -249,6 +252,9 @@ do
           group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", { clear = false }),
           buffer = args.buf,
           callback = function()
+            if client:is_stopped() then
+              return true
+            end
             vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
           end,
         })
