@@ -22,15 +22,19 @@ Base on [lazy.nvim](https://lazy.folke.io/)
 ```
 
 ### Dependencies
-You can search keyword "NOTE: (DEPENDENCE)" in this repository to inspect all dependencies and which
-plugin dependence them.
-
-- [neovim](https://neovim.io/) >= 0.11
-- lazy.nvim's [dependencies](https://lazy.folke.io/#%EF%B8%8F-requirements)
-- nvim-treesitter's [dependencies](https://github.com/nvim-treesitter/nvim-treesitter/tree/main?tab=readme-ov-file#requirements)
-- mason's [dependencies](https://github.com/mason-org/mason.nvim?tab=readme-ov-file#requirements)
-- yarn (for [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim?tab=readme-ov-file#installation--usage))
-- curl & unzip (only WSL environment need)
+- `Neovim` >= 0.11.4
+- `Git` >= 2.19.0(for partial clones support)
+- a Nerd Font
+- `tar` and `curl`
+- `treesitter-cli` >= 0.25.0
+- a C compiler
+- `Node` >= 23.0.0 (for some parsers)
+- `unzip`
+- `gzip`
+- `yarn`
+- [`rg`](https://github.com/BurntSushi/ripgrep)
+- [`fd`](https://github.com/sharkdp/fd)(optional)
+- For Windows, one of `7zip`, `peazip`, `archiver`, `winzip`, `WinRAR`
 
 ### Principle
 - Maintainable
