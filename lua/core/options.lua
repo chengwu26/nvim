@@ -1,10 +1,6 @@
----@brief
 ---
---- Default option
+--- Default options
 --- To see anyone option's detail, type ':h <option>'
----
---- If you want to see plugin-related/plugin-dependence options, they are in the
---- plugin's own configuration, go to `lua/plugins/` and look for them.
 ---
 
 local opt = vim.opt

@@ -1,9 +1,13 @@
----@brief
 ---
---- All configurations in this module are independent of any
---- plugin and must be used independently.
---- If you need to replace these default behaviors with plugin functionality,
---- you should override them in the plugin's own configuration.
+--- To facilitate maintenance and plugin replacement, the configuration items
+--- in this module should not depend on any plugins, ensuring that they remain
+--- functional even after any plugin is removed.
+---
+--- For flexibility, these defaults can be overridden by plugins, but should not
+--- change their semantics, e.g. the keymap 'grn' must be used to rename symbols.
+---
+--- Configuration that depend on plugins will be placed in the plugin's own
+--- configuration file. This can be found in lua/plugins/xxx/xxx.lua
 ---
 
 require("core.options")

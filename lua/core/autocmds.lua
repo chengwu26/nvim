@@ -1,14 +1,5 @@
----@brief
 ---
---- Default autocmd
----
---- If you want to see plugin-related autocmds, they are in the plugin's
---- own configuration, go to `lua/plugins/` and look for them.
----
---- The LSP-related autocmds also at here. These autocmds define many keymaps
---- and behaviors. But their implementations are very simple, so they are not
---- excellent to use. But these behaviors can be override by plugin, for more
---- details see the `[[ LSP ]]` section.
+--- Default autocmds
 ---
 
 local cmd = vim.api.nvim_create_autocmd
@@ -38,25 +29,26 @@ cmd("FileType", {
   end,
 })
 
--- [[ LSP ]]
--- Keymap:
---  You can see the default keymaps at the `preset` table. This table defined
---  the mapping between `vim.lsp.protocol.Method` and action. For consistency,
---  you shouldn't change their mappings. But you can use corresponding
---  implementations of the plugin override these actions, like this:
---  ```lua
---  vim.lsp.buf.rename = <plugin-lsp-api>
---  ```
---
--- Complete, Format and Highlight:
---  They also can be disable through
---  ```lua
---  local utils = require("utils")
---  utils.del_matching_group(kg%.lsp%.complete) -- disable complete
---  utils.del_matching_group(kg%.lsp%.format)   -- disable format
---  utils.del_matching_group(kg%.lsp%.highlight) -- disable highlight
---  ```
---
+--- [[ LSP ]]
+--- Keymap:
+---  You can see the default keymaps at the `preset` table. This table defined
+---  the mapping between `vim.lsp.protocol.Method` and lSP action.
+---  You can use corresponding implementations of the plugin override their
+---  behavior, like this.
+---  ```lua
+---  vim.lsp.buf.rename = <plugin-lsp-rename-function>
+---  ```
+---  Then the 'grn' will call new function to rename the symbol.
+---
+--- Complete, Format and Highlight:
+---  They also can be disable through
+---  ```lua
+---  local utils = require("utils")
+---  utils.del_matching_group(kg%.lsp%.complete)  -- disable native complete
+---  utils.del_matching_group(kg%.lsp%.format)    -- disable LSP auto-format
+---  utils.del_matching_group(kg%.lsp%.highlight) -- disable symbol highlight
+---  ```
+---
 do
   ---@class LspProxy
   ---@field rename fun()
@@ -169,7 +161,6 @@ do
     group = vim.api.nvim_create_augroup("kg.lsp.keymap", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      -- Setup keymap
       for method, keymap in pairs(preset) do
         if client:supports_method(method) then
           vim.keymap.set(

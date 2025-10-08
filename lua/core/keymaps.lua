@@ -1,12 +1,7 @@
----@brief
 ---
---- Default keymap
+--- Default keymaps
 ---
---- If you want to see plugin-related keymaps, they are in the
---- plugin's own configuration, go to `lua/plugins/` and look for them.
----
---- And also have some default keymaps are dynamically defined, see
---- the `autocomds.lua`
+--- Some keymaps are set dynamically, they are usually in `autocmds.lua`
 ---
 
 vim.g.mapleader = " "
