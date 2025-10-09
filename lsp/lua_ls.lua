@@ -5,7 +5,7 @@
 --- Lua language server.
 
 --- Wether or not loaded neovim library
-local loaded = false
+local has_loaded = false
 
 return {
   cmd = { "lua-language-server" },
@@ -61,11 +61,17 @@ return {
   --- load the relevant libraries.
   ---@param client vim.lsp.Client
   on_attach = function(client, _)
-    if client.root_dir ~= vim.fn.stdpath("config") or loaded then
-      return
+    if has_loaded then return end
+    local is_wthin_runtime_path = false
+    for _, path in ipairs(vim.opt.runtimepath:get()) do
+      if client.root_dir:sub(1, #client.root_dir) == path then
+        is_wthin_runtime_path = true
+        break
+      end
     end
+    if not is_wthin_runtime_path then return end
 
-    loaded = true
+    has_loaded = true
     local extras_library = { vim.env.VIMRUNTIME, "${3rd}/luv/library" }
     local lazy_path = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
     local handle = vim.uv.fs_scandir(lazy_path)
