@@ -23,14 +23,11 @@ vim.lsp.enable({
 })
 
 -- Enable enhanced feature
+---@type Utils
 local utils = require("utils")
-local features = require("features")
-
 if utils.env == "WSL" then
-  features.wsl_clipboard()
-  features.smart_input_method()
-end
-
-if utils.env == "Windows" then
-  features.smart_input_method()
+  require("utils.install").install_win32yank()
+  require("utils.install").install_im_select()
+elseif utils.env == "Windows" then
+  require("utils.install").install_im_select()
 end
