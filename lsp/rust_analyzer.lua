@@ -58,6 +58,7 @@ end
 return {
   cmd = { "rust-analyzer" },
   filetypes = { "rust" },
+  settings = { ["rust-analyzer"] = { check = { command = "clippy" } } },
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     local reused_dir = is_library(fname)
