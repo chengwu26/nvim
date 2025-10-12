@@ -27,7 +27,7 @@ vim.lsp.enable({
 local utils = require("utils")
 if utils.env == "WSL" then
   require("utils.install").install_win32yank()
-  require("utils.install").install_im_select()
+  if LEVEL > 0 then require("utils.install").install_im_select() end
 elseif utils.env == "Windows" then
   require("utils.install").install_im_select()
 end

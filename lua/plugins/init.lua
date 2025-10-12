@@ -37,9 +37,7 @@ local spec = {
   { import = "plugins.utils" },
   { import = "plugins.ui" },
 }
-if require("utils").is_dev then ---@diagnostic disable-line
-  table.insert(spec, { import = "plugins.dev" })
-end
+table.insert(spec, { import = "plugins.dev", enabled = LEVEL > 1 })
 
 require("lazy").setup({
   spec = spec,
