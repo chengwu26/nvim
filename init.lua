@@ -4,7 +4,7 @@
 --  0: Neovim don't load any plugins, use this level when `argv[1]` is 'vi'
 --  1: Don't load development plugins, use this level when `argv[1]` is 'vim'
 --  2(default): Load all plugins defined in this configuration
-LEVEL = ({ vi = 0, vim = 1 })[vim.v.argv[1]] or 2
+LEVEL = ({ vi = 0, vim = 1 })[vim.fs.basename(vim.v.argv[1])] or 2
 
 -- Define your commonly used filetypes. This maybe control some plugin's load logic
 -- Program language
