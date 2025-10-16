@@ -68,21 +68,4 @@ function M.install_win32yank()
   notify("win32yank installed successfully")
 end
 
-function M.install_im_select()
-  assert(var.env == "WSL" or var.env == "Windows", "Only supports WSL and Windows")
-
-  local install_dir = vim.fn.stdpath("data") .. "/im-select"
-  local exe_path = install_dir .. "/im-select.exe"
-  local url = "https://github.com/daipeihust/im-select/raw/master/win/out/x86/im-select.exe"
-  local sep = var.env == "WSL" and ":" or ";"
-  vim.env.PATH = install_dir .. sep .. vim.env.PATH
-
-  if vim.fn.executable("im-select.exe") == 1 then return end
-
-  if not download_file(url, exe_path) then return end
-  if jit.os == "Linux" then make_executable(exe_path) end
-
-  notify("im-select installed successfully")
-end
-
 return M
