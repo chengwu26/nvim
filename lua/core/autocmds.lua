@@ -5,17 +5,14 @@
 local cmd = vim.api.nvim_create_autocmd
 
 -- [[ General ]]
--- Highlight text on yank
 cmd("TextYankPost", {
   desc = "Highlight when yanking text",
   callback = function() vim.hl.on_yank() end,
 })
 
--- Restore cursor position on file open
 cmd("FileType", {
   desc = "Restore cursor position",
   callback = function(args)
-    -- Don't apply to git messages
     local ft = vim.bo[args.buf].ft
     if ft == "gitcommit" or ft == "gitrebase" then
       return

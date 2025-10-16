@@ -4,8 +4,7 @@
 --- Plugin Manager: [lazy.nvim](https://lazy.folke.io/)
 ---
 --- Plugins are divided into submodules (ui, utils, dev) according to their
---- main functionality. The dev modules can be disabled by set global variable
---- `ENABLE_DEV` to falsy or unset environment variable `DEV_ENV`.
+--- main functionality.
 ---
 
 -- NOTE: (DEPENDENCE)
