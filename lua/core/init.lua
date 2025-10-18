@@ -20,6 +20,7 @@ vim.lsp.enable({
   "rust_analyzer",
   "jsonls",
   "marksman",
+  "clangd",
 })
 
 -- Enable enhanced feature
