@@ -56,7 +56,8 @@ end
 
 ---@type table<string, vim.lsp.Config>|vim.lsp.Config
 return {
-  cmd = { "rust-analyzer" },
+  -- The rust-analyzer not be added to the PATH by rustup on Arch Linux.
+  cmd = jit.os == "Linux" and { "env", "-a", "rust-analyzer", "rustup" } or { "rust-analyzer" },
   filetypes = { "rust" },
   settings = { ["rust-analyzer"] = { check = { command = "clippy" } } },
   root_dir = function(bufnr, on_dir)
