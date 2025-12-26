@@ -21,6 +21,7 @@ vim.lsp.enable({
   "jsonls",
   "marksman",
   "clangd",
+  "tinymist",
 })
 
 -- Enable enhanced feature
