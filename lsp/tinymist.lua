@@ -69,4 +69,14 @@ return {
         { nargs = 0, desc = cmd_desc })
     end
   end,
+  settings = {
+    completion = {
+      postfix = false,
+      postfixUfcs = false,
+      postfixUfcsRight = false,
+    },
+    fontPaths = "fonts",
+    formatterMode = "typstyle",
+    lint = { enable = true, when = "onType" },
+  },
 }
