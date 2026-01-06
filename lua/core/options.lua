@@ -27,7 +27,7 @@ opt.smartcase = true
 
 -- [[ Appearance ]]
 opt.cursorline = true
-opt.guifont = "Maple Mono NF CN:h13"
+opt.guifont = "Maple Mono NL NF CN:h13"
 opt.laststatus = 3
 opt.signcolumn = "yes:1"
 opt.termguicolors = true
