@@ -26,9 +26,4 @@ function M.del_matching_group(pattern)
   return #matchs
 end
 
--- [[ Fold Text ]]
-function M.foldtext()
-  return require("utils.foldtext").foldtext()
-end
-
 return M
