@@ -36,6 +36,8 @@ map("x", "<leader>y", "\"+y", { desc = "Yank selection to clipboard" })
 map("n", "<leader>y", "\"+yy", { desc = "Yank line to clipboard" })
 map("n", "<leader>Y", "\"+y$", { desc = "Yank to EOL to clipboard" })
 map("n", "<leader>p", "\"+p", { desc = "Put from clipboard" })
+map("x", "<", "<gv", { desc = "Deindent line" })
+map("x", ">", ">gv", { desc = "Indent line" })
 
 -- Window
 local smart_navigation = require("utils.tmux").smart_navigation
