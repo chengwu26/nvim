@@ -2,7 +2,6 @@
 --- Tree-sitter configurations and abstraction layer.
 ---
 
-local utils = require("utils")
 ---@type LazySpec[]
 return {
   {
@@ -72,6 +71,24 @@ return {
           map(mode, "as", function()
             ts_select("@local.scope", "locals")
           end, { buffer = args.buf, desc = "A scope" })
+
+          table.insert(mode, "n")
+          local ts_move = require("nvim-treesitter-textobjects.move")
+          map(mode, "]f", function()
+            ts_move.goto_next("@function.outer", "textobjects")
+          end, { buffer = args.buf, desc = "Next function" })
+
+          map(mode, "[f", function()
+            ts_move.goto_previous("@function.outer", "textobjects")
+          end, { buffer = args.buf, desc = "Prev function" })
+
+          map(mode, "]c", function()
+            ts_move.goto_next("@class.outer", "textobjects")
+          end, { buffer = args.buf, desc = "Next class" })
+
+          map(mode, "[c", function()
+            ts_move.goto_previous("@class.outer", "textobjects")
+          end, { buffer = args.buf, desc = "Prev class" })
         end,
       })
     end,
