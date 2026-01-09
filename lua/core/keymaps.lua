@@ -30,6 +30,8 @@ end, { desc = "Toggle Tabline" })
 -- Text
 map("n", "<C-s>", ":%s/", { desc = "Replace in buffer" })
 map("x", "<C-s>", ":s/", { desc = "Replace within visual line" })
+map("x", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down", silent = true })
+map("x", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up", silent = true })
 map("x", "<leader>y", "\"+y", { desc = "Yank selection to clipboard" })
 map("n", "<leader>y", "\"+yy", { desc = "Yank line to clipboard" })
 map("n", "<leader>Y", "\"+y$", { desc = "Yank to EOL to clipboard" })
