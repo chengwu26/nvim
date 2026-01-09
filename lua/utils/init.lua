@@ -1,8 +1,6 @@
 ---@class Utils
----@field is_dev boolean
 ---@field env Env
 ---@field del_matching_group fun(pattern: string): integer
----@field foldtext function
 local M = require("utils.var")
 
 --- Delete all maching augroup and inside autocmds.
