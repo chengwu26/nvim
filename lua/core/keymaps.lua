@@ -9,33 +9,33 @@ vim.g.maplocalleader = " "
 
 local map = vim.keymap.set
 
-map("i", "jk", "<ESC>", { silent = true })
+map("i", "jk", "<ESC>")
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
-map("x", "/", "<ESC>/\\%V", { desc = "Search within Visual selection" })
+map("x", "/", "<ESC>/\\%V", { desc = "Search within visual selection" })
 map("n", "L", vim.diagnostic.open_float, { desc = "Show Diagnostic" })
+-- more consistent behavior of j/k when warp is set
+map({ "n", "x" }, "j", "v:count ? 'j' : 'gj'", { expr = true })
+map({ "n", "x" }, "k", "v:count ? 'k' : 'gk'", { expr = true })
 
 -- Tabpage
 map("n", "<M-,>", "<CMD>tabprevious<CR>", { desc = "Prev Tab" })
 map("n", "<M-.>", "<CMD>tabnext<CR>", { desc = "Next Tab" })
-map("n", "<M-<>", "<CMD>-tabmove<CR>", { desc = "Move Tab to Left" })
-map("n", "<M->>", "<CMD>+tabmove<CR>", { desc = "Move Tab to Right" })
+map("n", "<M-<>", "<CMD>-tabmove<CR>", { desc = "Move tab left" })
+map("n", "<M->>", "<CMD>+tabmove<CR>", { desc = "Move tab right" })
 map("n", "<leader>tt", function()
   ---@diagnostic disable-next-line
   vim.opt.showtabline = vim.opt.showtabline:get() == 0 and 1 or 0
 end, { desc = "Toggle Tabline" })
 
--- More consistent behavior of j/k when warp is set
-map({ "n", "x" }, "j", "v:count ? 'j' : 'gj'", { expr = true, silent = true })
-map({ "n", "x" }, "k", "v:count ? 'k' : 'gk'", { expr = true, silent = true })
+-- Text
+map("n", "<C-s>", ":%s/", { desc = "Replace in buffer" })
+map("x", "<C-s>", ":s/", { desc = "Replace within visual line" })
+map("x", "<leader>y", "\"+y", { desc = "Yank selection to clipboard" })
+map("n", "<leader>y", "\"+yy", { desc = "Yank line to clipboard" })
+map("n", "<leader>Y", "\"+y$", { desc = "Yank to EOL to clipboard" })
+map("n", "<leader>p", "\"+p", { desc = "Put from clipboard" })
 
--- Quick replace string
-map("n", "<C-s>", ":%s/")
-map("x", "<C-s>", ":s/")
-
--- Window operation
-map("n", "\\", "<CMD>sp<CR>", { desc = "Split window horizontally" })
-map("n", "|", "<CMD>vsp<CR>", { desc = "Split window vertically" })
-
+-- Window
 local smart_navigation = require("utils.tmux").smart_navigation
 map({ "n", "t" }, "<C-h>", function() smart_navigation("h") end,
   { desc = "Focus the left window/pane" })
@@ -45,21 +45,17 @@ map({ "n", "t" }, "<C-j>", function() smart_navigation("j") end,
   { desc = "Focus the lower window/pane" })
 map({ "n", "t" }, "<C-k>", function() smart_navigation("k") end,
   { desc = "Focus the upper window/pane" })
+map("n", "\\", "<CMD>sp<CR>", { desc = "Split window horizontally" })
+map("n", "|", "<CMD>vsp<CR>", { desc = "Split window vertically" })
 
--- Yank/Put to/from clipboard
-map("v", "<leader>y", "\"+y", { desc = "Yank selection to clipboard" })
-map("n", "<leader>y", "\"+yy", { desc = "Yank line to clipboard" })
-map("n", "<leader>Y", "\"+y$", { desc = "Yank to EOL to clipboard" })
-map("n", "<leader>p", "\"+p", { desc = "Put from clipboard" })
-
--- options
-map("n", "<leader>tw", "<CMD>set invwrap<CR>", { desc = "Toggle Wrap" })
-map("n", "<leader>tn", "<CMD>set invrnu<CR>", { desc = "Toggle Relative Number" })
+-- Options
+map("n", "<leader>tw", "<CMD>set invwrap<CR>", { desc = "Toggle wrap" })
+map("n", "<leader>tn", "<CMD>set invrnu<CR>", { desc = "Toggle relative number" })
 
 -- Remove some default global keymaps
 pcall(vim.keymap.del, "n", "<C-w>d")
 pcall(vim.keymap.del, "n", "grn")
-pcall(vim.keymap.del, { "n", "v" }, "gra")
+pcall(vim.keymap.del, { "n", "x" }, "gra")
 pcall(vim.keymap.del, "n", "grr")
 pcall(vim.keymap.del, "n", "grt")
 pcall(vim.keymap.del, "n", "gri")
