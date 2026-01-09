@@ -239,7 +239,7 @@ do
     group = vim.api.nvim_create_augroup("kg.lsp.format", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      vim.bo[args.buf].formatexpr = "v:lua.vim.lsp.formatexpr"
+      vim.bo[args.buf].formatexpr = "v:lua.vim.lsp.formatexpr()"
       if
           not client:supports_method(methods.textDocument_willSaveWaitUntil)
           and client:supports_method(methods.textDocument_formatting)
