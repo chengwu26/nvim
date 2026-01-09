@@ -9,10 +9,10 @@ return {
     "nvim-treesitter/nvim-treesitter",
     lazy = false, -- This plugin does not support lazy-loading.
     build = ":TSUpdate",
-    branch = "main",
     config = function()
-      local ensure_install = { "regex", "markdown_inline", "vimdoc", "vim" }
-      if utils.is_dev then
+      -- Install these parser to ensure help documentation can be highlighting normally.
+      local ensure_install = { "lua", "regex", "markdown_inline", "vimdoc", "vim" }
+      if LEVEL > 1 then
         vim.list_extend(ensure_install, CODE_CONF_FT)
       end
       local ts = require("nvim-treesitter")
@@ -27,7 +27,7 @@ return {
         pattern = ft,
         callback = function(args)
           vim.treesitter.start(args.buf)
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })
     end,
