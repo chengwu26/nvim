@@ -18,7 +18,7 @@ return {
         ["<F5>"] = "actions.refresh",
       },
       float = {
-        padding = 4,
+        padding = 2,
       },
     },
     init = function()
