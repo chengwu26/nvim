@@ -8,7 +8,7 @@ LEVEL = ({ vi = 0, vim = 1 })[vim.fs.basename(vim.v.argv[1])] or 2
 
 -- Define your commonly used filetypes. This maybe control some plugin's load logic
 -- Program language
-CODE_FT = { "python", "lua", "c", "rust", "bash", "zsh" }
+CODE_FT = { "python", "lua", "c", "rust", "bash", "fish" }
 -- Config and markup language
 CONF_FT = { "yaml", "toml", "json", "markdown" }
 CODE_CONF_FT = vim.list_extend(vim.deepcopy(CODE_FT), CONF_FT)
