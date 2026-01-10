@@ -9,4 +9,10 @@ return {
   opts = {
     fast_wrap = {}, -- Enable fast_wrap, detail see documentation comment
   },
+  config = function(_, opts)
+    local Rule = require("nvim-autopairs.rule")
+    local npairs = require("nvim-autopairs")
+    npairs.setup(opts)
+    npairs.add_rule(Rule("$", "$", "typst"))
+  end,
 }
