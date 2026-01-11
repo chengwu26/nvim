@@ -54,11 +54,10 @@ local function is_library(fname)
   end
 end
 
----@type table<string, vim.lsp.Config>|vim.lsp.Config
+---@type vim.lsp.Config
 return {
   cmd = { "rust-analyzer" },
   filetypes = { "rust" },
-  settings = { ["rust-analyzer"] = { check = { command = "clippy" } } },
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     local reused_dir = is_library(fname)
@@ -99,23 +98,41 @@ return {
 
         on_dir(cargo_workspace_root or cargo_crate_dir)
       else
-        vim.schedule(
-          function()
-            vim.notify(
-              ("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(
-                output.code,
-                cmd,
-                output.stderr
-              )
-            )
-          end
-        )
+        vim.schedule(function()
+          vim.notify(("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd,
+            output.stderr))
+        end)
       end
     end)
   end,
   capabilities = {
     experimental = {
       serverStatusNotification = true,
+      commands = {
+        commands = {
+          "rust-analyzer.showReferences",
+          "rust-analyzer.runSingle",
+          "rust-analyzer.debugSingle",
+        },
+      },
+    },
+  },
+  settings = {
+    ["rust-analyzer"] = {
+      check = { command = "clippy" },
+      lens = {
+        debug = { enable = true },
+        enable = true,
+        implementations = { enable = true },
+        references = {
+          adt = { enable = true },
+          enumVariant = { enable = true },
+          method = { enable = true },
+          trait = { enable = true },
+        },
+        run = { enable = true },
+        updateTest = { enable = true },
+      },
     },
   },
   before_init = function(init_params, config)
@@ -123,13 +140,28 @@ return {
     if config.settings and config.settings["rust-analyzer"] then
       init_params.initializationOptions = config.settings["rust-analyzer"]
     end
+    ---@param command table{ title: string, command: string, arguments: any[] }
+    vim.lsp.commands["rust-analyzer.runSingle"] = function(command)
+      local r = command.arguments[1]
+      local cmd = { "cargo", unpack(r.args.cargoArgs) }
+      if r.args.executableArgs and #r.args.executableArgs > 0 then
+        vim.list_extend(cmd, { "--", unpack(r.args.executableArgs) })
+      end
+
+      local proc = vim.system(cmd, { cwd = r.args.cwd })
+
+      local result = proc:wait()
+
+      if result.code == 0 then
+        vim.notify(result.stdout, vim.log.levels.INFO)
+      else
+        vim.notify(result.stderr, vim.log.levels.ERROR)
+      end
+    end
   end,
-  on_attach = function()
-    vim.api.nvim_buf_create_user_command(
-      0,
-      "LspCargoReload",
-      function() reload_workspace(0) end,
-      { desc = "Reload current cargo workspace" }
-    )
+  on_attach = function(_, bufnr)
+    vim.api.nvim_buf_create_user_command(bufnr, "LspCargoReload", function()
+      reload_workspace(bufnr)
+    end, { desc = "Reload current cargo workspace" })
   end,
 }

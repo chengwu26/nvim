@@ -3,14 +3,20 @@
 --- https://github.com/luals/lua-language-server
 ---
 --- Lua language server.
+---
+--- `lua-language-server` can be installed by following the instructions [here](https://luals.github.io/#neovim-install).
+---
+--- The default `cmd` assumes that the `lua-language-server` binary can be found in `$PATH`.
 
 --- Wether or not loaded neovim library
 local has_loaded = false
 
+---@type vim.lsp.Config
 return {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
   root_markers = {
+    ".emmyrc.json",
     ".luarc.json",
     ".luarc.jsonc",
     ".luacheckrc",
@@ -32,9 +38,9 @@ return {
           trailing_table_separator = "smart",
         },
       },
-      workspace = {
-        checkThirdParty = false,
-      },
+      workspace = { checkThirdParty = false },
+      codeLens = { enable = true },
+      hint = { enable = true, semicolon = "Disable" },
       diagnostics = {
         libraryFiles = "Disable",
         groupFileStatus = {
@@ -72,12 +78,10 @@ return {
     if not is_wthin_runtime_path then return end
 
     has_loaded = true
-    local extras_library = { vim.env.VIMRUNTIME, "${3rd}/luv/library" }
+    local extras_library = { vim.fs.joinpath(vim.env.VIMRUNTIME, "lua"), "${3rd}/luv/library" }
     local lazy_path = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
     local handle = vim.uv.fs_scandir(lazy_path)
-    if not handle then
-      return
-    end
+    if not handle then return end
 
     while true do
       local name, ty = vim.uv.fs_scandir_next(handle)
