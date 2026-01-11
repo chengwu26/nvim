@@ -1,7 +1,10 @@
 ---@class Utils
----@field env Env
+---@field is_wsl boolean
 ---@field del_matching_group fun(pattern: string): integer
-local M = require("utils.var")
+local M = {}
+
+--- Whether or not is in WSL
+M.is_wsl = os.getenv("WSL_DISTRO_NAME") and true or false
 
 --- Delete all maching augroup and inside autocmds.
 ---@param pattern string

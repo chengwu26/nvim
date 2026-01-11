@@ -26,7 +26,7 @@ vim.lsp.enable({
 
 -- Enable enhanced feature
 ---@type Utils
-local utils = require("utils")
-if utils.env == "WSL" then
-  require("utils.install").install_win32yank()
+local utils = require("kg.utils")
+if utils.is_wsl then
+  require("kg.win32yank").install_win32yank()
 end

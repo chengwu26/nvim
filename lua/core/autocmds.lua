@@ -40,7 +40,7 @@ cmd("FileType", {
 --- Complete, Format and Highlight:
 ---  They also can be disable through
 ---  ```lua
----  local utils = require("utils")
+---  local utils = require("kg.utils")
 ---  utils.del_matching_group(kg%.lsp%.complete)  -- disable native complete
 ---  utils.del_matching_group(kg%.lsp%.format)    -- disable LSP auto-format
 ---  utils.del_matching_group(kg%.lsp%.highlight) -- disable symbol highlight

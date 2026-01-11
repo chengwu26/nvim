@@ -40,7 +40,7 @@ map("x", "<", "<gv", { desc = "Deindent line" })
 map("x", ">", ">gv", { desc = "Indent line" })
 
 -- Window
-local smart_navigation = require("utils.tmux").smart_navigation
+local smart_navigation = require("kg.tmux").smart_navigation
 map({ "n", "t" }, "<C-h>", function() smart_navigation("h") end,
   { desc = "Focus the left window/pane" })
 map({ "n", "t" }, "<C-l>", function() smart_navigation("l") end,

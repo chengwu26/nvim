@@ -1,6 +1,8 @@
+---@class Win32yank
+---@field install_win32yank fun()
 local M = {}
 
-local var = require("utils.var")
+local utils = require("kg.utils")
 
 local function notify(msg, level)
   vim.notify(msg, level or vim.log.levels.INFO)
@@ -44,8 +46,9 @@ local function make_executable(path)
   return true
 end
 
+--- Install win32yank for WSL
 function M.install_win32yank()
-  assert(var.env == "WSL", "Only supports WSL")
+  assert(utils.is_wsl, "Only supports WSL")
   if not (jit.arch == "x86" or jit.arch == "x64") then
     notify("Unsupported architecture: " .. jit.arch, vim.log.levels.WARN)
     return

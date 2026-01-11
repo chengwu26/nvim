@@ -29,7 +29,7 @@ Neovim in a clean state. Such as the root user use neovim.
     │   ├── utils/          utils plugins
     │   ├── ui/             ui improved plugins
     │   └── dev/            development plugins
-    └── utils/              custom module
+    └── kg/                 custom module
 ```
 
 ### Dependencies

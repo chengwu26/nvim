@@ -6,7 +6,7 @@ return {
   dependencies = { "rafamadriz/friendly-snippets" },
   init = function()
     -- Disable native LSP completion
-    require("utils").del_matching_group("kg%.lsp%.complete")
+    require("kg.utils").del_matching_group("kg%.lsp%.complete")
   end,
   ---@type blink.cmp.Config
   opts = {
