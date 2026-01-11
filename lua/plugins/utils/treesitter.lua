@@ -14,8 +14,7 @@ return {
       if LEVEL:include_full() then
         vim.list_extend(ensure_install, CODE_CONF_FT)
       end
-      local ts = require("nvim-treesitter")
-      ts.install(ensure_install):wait(300000)
+      require("nvim-treesitter").install(ensure_install)
 
       local ft = {}
       for _, lang in ipairs(require("nvim-treesitter").get_installed()) do
