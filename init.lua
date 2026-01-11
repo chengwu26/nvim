@@ -4,8 +4,12 @@
 --  0: Neovim don't load any plugins, use this level when `argv[1]` is 'vi'
 --  1: Don't load development plugins, use this level when `argv[1]` is 'vim'
 --  2(default): Load all plugins defined in this configuration
-LEVEL = ({ vi = 0, vim = 1 })[vim.fs.basename(vim.v.argv[1])] or 2
-
+LEVEL = {
+  level = ({ vi = 0, vim = 1 })[vim.fs.basename(vim.v.argv[1])] or 2,
+  include_minimal = function(_) return true end,
+  include_basic = function(t) return t.level >= 1 end,
+  include_full = function(t) return t.level >= 2 end,
+}
 -- Define your commonly used filetypes. This maybe control some plugin's load logic
 -- Program language
 CODE_FT = { "python", "lua", "c", "rust", "bash", "fish" }
@@ -14,6 +18,6 @@ CONF_FT = { "yaml", "toml", "json", "markdown" }
 CODE_CONF_FT = vim.list_extend(vim.deepcopy(CODE_FT), CONF_FT)
 
 require("core")
-if LEVEL > 0 then
+if LEVEL:include_basic() then
   require("plugins")
 end
