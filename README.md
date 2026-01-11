@@ -3,15 +3,15 @@ Base on [lazy.nvim](https://lazy.folke.io/)
 
 ### Neovim Startup Mode
 
-This configuration supports a flexible startup level system based on command-line arguments,
+This configuration supports a flexible startup level system based on command-line proxy name,
 allowing you to control which plugins are loaded depending on the launch context:
 
 - `Minimal`: No plugins are loaded. Triggered when `vim.v.argv[1] == 'vi'`, e.g. `env -a vi nvim`
 - `Basic`: Development plugins are skipped. Triggered when `vim.v.argv[1] == 'vim'`, e.g. `env -a vim nvim`
 - `Full` (default): All plugins defined in this configuration are loaded
 
-This mechanism is useful for optimizing performance, isolating development tools, or launching
-Neovim in a clean state.
+This mechanism is useful for isolating development tools, or launching
+Neovim in a clean state. Such as the root user use neovim.
 
 ### Project layout
 ```
