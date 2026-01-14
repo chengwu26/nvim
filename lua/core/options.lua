@@ -66,6 +66,7 @@ opt.formatoptions = "croqj"
 -- diagnostic
 vim.diagnostic.config({
   float = { severity_sort = true },
+  severity_sort = true,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = "●",
