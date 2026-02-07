@@ -31,7 +31,7 @@ opt.guifont = "Maple Mono NL NF CN:h13"
 opt.laststatus = 3
 opt.signcolumn = "yes:1"
 opt.termguicolors = true
-opt.winborder = "none"
+opt.winborder = "rounded"
 -- scroll
 opt.scrolloff = 4
 opt.sidescrolloff = 8
