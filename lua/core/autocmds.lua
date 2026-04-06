@@ -271,4 +271,24 @@ do
   --     end
   --   end,
   -- })
+  cmd("LspAttach", {
+    desc = "LSP: Progress Message",
+    group = vim.api.nvim_create_augroup("kg.lsp.progress", {}),
+    callback = function(args)
+      cmd("LspProgress", {
+        buffer = args.buf,
+        callback = function(args2)
+          local value = args2.data.params.value
+          vim.api.nvim_echo({ { value.message or "done" } }, false, {
+            id = "lsp." .. args2.data.client_id,
+            kind = "progress",
+            source = "vim.lsp",
+            title = value.title,
+            status = value.kind ~= "end" and "running" or "success",
+            percent = value.percentage,
+          })
+        end,
+      })
+    end,
+  })
 end
