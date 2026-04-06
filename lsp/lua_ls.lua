@@ -68,9 +68,12 @@ return {
   ---@param client vim.lsp.Client
   on_attach = function(client, _)
     if has_loaded then return end
+
     local is_wthin_runtime_path = false
+    local root_dir = vim.fs.normalize(client.root_dir)
     for _, path in ipairs(vim.opt.runtimepath:get()) do
-      if client.root_dir:sub(1, #client.root_dir) == path then
+      path = vim.fs.normalize(path)
+      if vim.startswith(root_dir, path) then
         is_wthin_runtime_path = true
         break
       end
