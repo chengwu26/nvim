@@ -42,7 +42,6 @@ Neovim in a clean state. Such as the root user use neovim.
 - `Node` >= 23.0.0 (for some parsers)
 - `unzip`
 - `gzip`
-- `yarn`
 - [`rg`](https://github.com/BurntSushi/ripgrep)
 - [`fd`](https://github.com/sharkdp/fd)(optional)
 - For Windows, one of `7zip`, `peazip`, `archiver`, `winzip`, `WinRAR`
