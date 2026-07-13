@@ -33,7 +33,7 @@ Neovim in a clean state. Such as the root user use neovim.
 ```
 
 ### Dependencies
-- `Neovim` >= 0.11.4
+- `Neovim` >= 0.12.0
 - `Git` >= 2.19.0(for partial clones support)
 - a Nerd Font
 - `tar` and `curl`
