@@ -16,7 +16,8 @@ require("core.autocmds")
 
 vim.lsp.enable({
   "lua_ls",
-  "pyright",
+  "ty",
+  "ruff",
   "rust_analyzer",
   "jsonls",
   "marksman",
