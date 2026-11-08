@@ -240,22 +240,24 @@ do
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
       vim.bo[args.buf].formatexpr = "v:lua.vim.lsp.formatexpr()"
-      if
-          not client:supports_method(methods.textDocument_willSaveWaitUntil)
-          and client:supports_method(methods.textDocument_formatting)
-      then
-        cmd("BufWritePre", {
-          desc = "LSP: Auto-format on save",
-          group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", { clear = false }),
-          buffer = args.buf,
-          callback = function()
-            if client:is_stopped() then
-              return true
-            end
-            vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-          end,
-        })
-      end
+
+      cmd("BufWritePre", {
+        desc = "LSP: Auto-format on save",
+        group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", { clear = false }),
+        buffer = args.buf,
+        callback = function()
+          if client:is_stopped() then
+            return true
+          end
+          if
+              client:supports_method(methods.textDocument_willSaveWaitUntil)
+              or not client:supports_method(methods.textDocument_formatting)
+          then
+            return
+          end
+          vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+        end,
+      })
     end,
   })
 
