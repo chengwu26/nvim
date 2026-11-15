@@ -26,6 +26,50 @@ cmd("FileType", {
   end,
 })
 
+cmd("LspAttach", {
+  desc = "LSP: Highlight symbol under the cursor",
+  callback = function(args)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    if not client:supports_method("textDocument/documentHighlight") then
+      return
+    end
+
+    cmd({ "CursorHold", "CursorHoldI" }, {
+      desc = "LSP: Highlight symbol under the cursor",
+      buf = args.buf,
+      callback = function()
+        if client:is_stopped() then return true end
+        vim.lsp.buf.document_highlight()
+      end,
+    })
+
+    cmd({ "CursorMoved", "CursorMovedI" }, {
+      desc = "LSP: Highlight symbol under the cursor",
+      buf = args.buf,
+      callback = function()
+        if client:is_stopped() then return end
+        vim.lsp.buf.clear_references()
+      end,
+    })
+  end,
+})
+
+cmd("LspProgress", {
+  desc = "LSP: Show LSP progress message",
+  ---@param args {data: vim.event.lspprogress.data}
+  callback = function(args)
+    local value = args.data.params.value
+    vim.api.nvim_echo({ { value.message or "done" } }, false, {
+      id = "lsp.progress." .. args.data.client_id,
+      kind = "progress",
+      source = "vim.lsp",
+      title = value.title,
+      status = value.kind ~= "end" and "running" or "success",
+      percent = value.percentage,
+    })
+  end,
+})
+
 --- [[ LSP ]]
 --- Keymap:
 ---  You can see the default keymaps at the `preset` table. This table defined
@@ -151,68 +195,84 @@ do
       rhs = function() vim.lsp.buf.typehierarchy("subtypes") end,
       desc = "List Subtypes",
     },
+    [methods.textDocument_inlayHint] = {
+      mode = "n",
+      lhs = "<leader>th",
+      rhs = function(buffer)
+        return function()
+          vim.lsp.inlay_hint.enable(
+            not vim.lsp.inlay_hint.is_enabled({ bufnr = buffer }),
+            { bufnr = buffer }
+          )
+        end
+      end,
+      desc = "Toggle Inlay Hint",
+    },
   }
+
+  ---@param client vim.lsp.Client
+  ---@param buffer integer
+  local function setup_lsp_keymap(client, buffer)
+    for method, keymap in pairs(preset) do
+      if not client:supports_method(method, buffer) then
+        goto continue
+      end
+
+      if method == methods.textDocument_inlayHint then
+        vim.keymap.set(
+          keymap.mode,
+          keymap.lhs,
+          keymap.rhs(buffer),
+          { desc = "LSP: " .. keymap.desc, buf = buffer })
+        goto continue
+      end
+
+      vim.keymap.set(
+        keymap.mode,
+        keymap.lhs,
+        keymap.rhs,
+        { desc = "LSP: " .. keymap.desc, buf = buffer }
+      )
+
+      ::continue::
+    end
+  end
+
+  ---@param client vim.lsp.Client
+  ---@param buffer integer
+  local function setup_lsp_complete(client, buffer)
+    if not client:supports_method(methods.textDocument_completion, buffer) then
+      return
+    end
+    vim.lsp.completion.enable(true, client.id, buffer, { autotrigger = true })
+  end
+
+  ---@param client vim.lsp.Client
+  ---@param buffer integer
+  local function setup_lsp_format_on_save(client, buffer)
+    if not client:supports_method(methods.textDocument_formatting, buffer) then
+      return
+    end
+
+    cmd("BufWritePre", {
+      desc = "LSP: Auto-format on save",
+      group = vim.api.nvim_create_augroup("kg.lsp.format.on_save.write_pre", { clear = false }),
+      buf = buffer,
+      callback = function()
+        if client:is_stopped() then
+          return true
+        end
+        vim.lsp.buf.format({ bufnr = buffer, id = client.id })
+      end,
+    })
+  end
 
   cmd("LspAttach", {
     desc = "LSP: Keymap",
     group = vim.api.nvim_create_augroup("kg.lsp.keymap", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      for method, keymap in pairs(preset) do
-        if client:supports_method(method) then
-          vim.keymap.set(
-            keymap.mode,
-            keymap.lhs,
-            keymap.rhs,
-            { desc = "LSP: " .. keymap.desc, buffer = args.buf }
-          )
-        end
-      end
-
-      if client:supports_method(methods.textDocument_inlayHint) then
-        vim.keymap.set(
-          "n",
-          "<leader>th",
-          function()
-            vim.lsp.inlay_hint.enable(
-              not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }),
-              { bufnr = args.buf }
-            )
-          end,
-          { desc = "LSP: Toggle Inlay Hint", buffer = args.buf }
-        )
-      end
-    end,
-  })
-
-  cmd("LspAttach", {
-    desc = "LSP: Highlight symbol under cursor",
-    group = vim.api.nvim_create_augroup("kg.lsp.highlight", {}),
-    callback = function(args)
-      local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      if client:supports_method(methods.textDocument_documentHighlight) then
-        local hl_augroup = vim.api.nvim_create_augroup("kg.lsp.highlight.on", { clear = false })
-        cmd({ "CursorHold", "CursorHoldI" }, {
-          buffer = args.buf,
-          group = hl_augroup,
-          callback = function()
-            if client:is_stopped() then
-              return true
-            end
-            vim.lsp.buf.document_highlight()
-          end,
-        })
-        cmd({ "CursorMoved", "CursorMovedI" }, {
-          buffer = args.buf,
-          group = hl_augroup,
-          callback = function()
-            if client:is_stopped() then
-              return true
-            end
-            vim.lsp.buf.clear_references()
-          end,
-        })
-      end
+      setup_lsp_keymap(client, args.buf)
     end,
   })
 
@@ -221,43 +281,16 @@ do
     group = vim.api.nvim_create_augroup("kg.lsp.complete", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      if client:supports_method(methods.textDocument_completion) then
-        local chars = {}
-        for i = 32, 126 do
-          table.insert(chars, string.char(i))
-        end
-        client.server_capabilities.completionProvider.triggerCharacters = chars
-        vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-        vim.keymap.set("i", "<Tab>", 'pumvisible() ? "<C-y>" : "<Tab>"',
-          { expr = true, noremap = true })
-      end
+      setup_lsp_complete(client, args.buf)
     end,
   })
 
   cmd("LspAttach", {
     desc = "LSP: Format",
-    group = vim.api.nvim_create_augroup("kg.lsp.format", {}),
+    group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", {}),
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      vim.bo[args.buf].formatexpr = "v:lua.vim.lsp.formatexpr()"
-
-      cmd("BufWritePre", {
-        desc = "LSP: Auto-format on save",
-        group = vim.api.nvim_create_augroup("kg.lsp.format.on_save", { clear = false }),
-        buffer = args.buf,
-        callback = function()
-          if client:is_stopped() then
-            return true
-          end
-          if
-              client:supports_method(methods.textDocument_willSaveWaitUntil)
-              or not client:supports_method(methods.textDocument_formatting)
-          then
-            return
-          end
-          vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-        end,
-      })
+      setup_lsp_format_on_save(client, args.buf)
     end,
   })
 
@@ -273,24 +306,31 @@ do
   --     end
   --   end,
   -- })
-  cmd("LspAttach", {
-    desc = "LSP: Progress Message",
-    group = vim.api.nvim_create_augroup("kg.lsp.progress", {}),
-    callback = function(args)
-      cmd("LspProgress", {
-        buffer = args.buf,
-        callback = function(args2)
-          local value = args2.data.params.value
-          vim.api.nvim_echo({ { value.message or "done" } }, false, {
-            id = "lsp." .. args2.data.client_id,
-            kind = "progress",
-            source = "vim.lsp",
-            title = value.title,
-            status = value.kind ~= "end" and "running" or "success",
-            percent = value.percentage,
-          })
-        end,
-      })
-    end,
-  })
+
+  vim.lsp.handlers[methods.client_registerCapability] = (function(overridden)
+    return function(err, res, ctx)
+      local result = overridden(err, res, ctx) ---@diagnostic disable-line
+      local client = vim.lsp.get_client_by_id(ctx.client_id)
+      if not client then return end
+
+      for buffer, _ in pairs(client.attached_buffers) do
+        local group_exists = pcall(vim.api.nvim_get_autocmds, { group = "kg.lsp.formata.on_save" })
+        if group_exists and client:supports_method(methods.textDocument_formatting, buffer) then
+          setup_lsp_format_on_save(client, buffer)
+        end
+
+        group_exists = pcall(vim.api.nvim_get_autocmds, { group = "kg.lsp.complete" })
+        if group_exists and client:supports_method(methods.textDocument_completion, buffer) then
+          setup_lsp_complete(client, buffer)
+        end
+
+        group_exists = pcall(vim.api.nvim_get_autocmds, { group = "kg.lsp.keymap" })
+        if group_exists then
+          setup_lsp_keymap(client, buffer)
+        end
+      end
+
+      return result
+    end
+  end)(vim.lsp.handlers[methods.client_registerCapability])
 end
