@@ -46,17 +46,63 @@ function M.install_win32yank()
   local zip_path = os.tmpname() .. ".zip"
   installing = true
 
-  notify("Downloading: " .. url)
-  run({ "curl", "-fL", "-o", zip_path, url }, "Download", function()
-    notify("Extracting to: " .. install_dir)
+  local msg_id = "kg.win32yank.install"
+  local msg_title = "win32yank"
+  local msg_source = "kg.win32yank.install"
+  vim.api.nvim_echo(
+    { { "Downloading win32yank..." } },
+    false,
+    { id = msg_id, title = msg_title, source = msg_source, kind = "progress", status = "running" }
+  )
+  vim.net.request(url, { outpath = zip_path }, vim.schedule_wrap(function(err)
+    if err then
+      vim.api.nvim_echo(
+        { { "Download failed: " .. err } },
+        false,
+        {
+          id = msg_id,
+          title = msg_title,
+          source = msg_source,
+          kind = "progress",
+          status = "error",
+        }
+      )
+      installing = false
+      os.remove(zip_path)
+      return
+    end
+
+    vim.api.nvim_echo(
+      { { "Downloaded. Extracting..." } },
+      false,
+      {
+        id = msg_id,
+        title = msg_title,
+        source = msg_source,
+        kind = "progress",
+        status = "success",
+        percent = 100,
+      }
+    )
     run({ "unzip", "-o", zip_path, "-d", install_dir }, "Extraction", function()
       os.remove(zip_path)
       run({ "chmod", "+x", exe_path }, "chmod", function()
         installing = false
-        notify("win32yank installed successfully")
+        vim.api.nvim_echo(
+          { { "win32yank Installed successfully" } },
+          false,
+          {
+            id = msg_id,
+            title = msg_title,
+            source = msg_source,
+            kind = "progress",
+            status = "success",
+            percent = 100,
+          }
+        )
       end)
     end)
-  end)
+  end))
 end
 
 return M
