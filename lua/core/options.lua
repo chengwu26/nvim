@@ -76,3 +76,5 @@ vim.diagnostic.config({
     },
   },
 })
+vim.lsp.linked_editing_range.enable(true)
+vim.lsp.on_type_formatting.enable(true)
