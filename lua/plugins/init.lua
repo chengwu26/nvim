@@ -36,7 +36,7 @@ local spec = {
   { import = "plugins.utils" },
   { import = "plugins.ui" },
 }
-table.insert(spec, { import = "plugins.dev", enabled = LEVEL:include_full() })
+table.insert(spec, { import = "plugins.dev", enabled = RT_LEVEL:is_full() })
 
 require("lazy").setup({
   spec = spec,
