@@ -13,6 +13,8 @@ map("i", "jk", "<ESC>")
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
 map("x", "/", "<ESC>/\\%V", { desc = "Search within visual selection" })
 map("n", "L", vim.diagnostic.open_float, { desc = "Show Diagnostic" })
+map("i", "<Tab>", 'pumvisible() ? "<C-y>" : "<Tab>"',
+  { expr = true, noremap = true, desc = "<Tab> accept completion" })
 -- more consistent behavior of j/k when warp is set
 map({ "n", "x" }, "j", "v:count ? 'j' : 'gj'", { expr = true })
 map({ "n", "x" }, "k", "v:count ? 'k' : 'gk'", { expr = true })
