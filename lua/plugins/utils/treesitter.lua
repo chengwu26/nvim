@@ -11,7 +11,7 @@ return {
     config = function()
       -- Install these parser to ensure help documentation can be highlighting normally.
       local ensure_install = { "lua", "regex", "markdown_inline", "vimdoc", "vim" }
-      if LEVEL:include_full() then
+      if RT_LEVEL:is_full() then
         vim.list_extend(ensure_install, CODE_CONF_FT)
       end
       require("nvim-treesitter").install(ensure_install)
