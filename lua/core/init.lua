@@ -15,7 +15,7 @@ require("core.keymaps")
 require("core.autocmds")
 
 vim.lsp.enable({
-  "lua_ls",
+  "emmylua_ls",
   "ty",
   "ruff",
   "rust_analyzer",
