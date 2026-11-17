@@ -6,6 +6,7 @@ return {
   dependencies = { "rafamadriz/friendly-snippets" },
   init = function()
     -- Disable native LSP completion
+    vim.opt.autocomplete = false
     require("kg.utils").del_matching_group("kg%.lsp%.complete")
   end,
   ---@type blink.cmp.Config

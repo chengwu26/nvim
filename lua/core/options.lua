@@ -11,7 +11,7 @@ opt.helplang = "cn" -- Use Chinese documentation, but it doesn't work now.
 opt.jumpoptions = "stack"
 opt.matchpairs:append("<:>")
 opt.mouse = ""
-opt.shortmess = "aoOCF"
+opt.shortmess = "aoOcCF"
 opt.showmatch = true
 opt.splitbelow = true
 opt.splitright = true
@@ -59,8 +59,12 @@ opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldtext = ""
 -- completion
+opt.autocomplete = true
+opt.complete = "o,.^3,w^2,b^2,f^2"
 opt.completeopt = { "menuone", "fuzzy", "noinsert", "popup" }
 opt.pumheight = 7
+opt.pummaxwidth = 80
+opt.pumborder = "rounded"
 -- formatting
 opt.formatoptions = "croqj"
 -- diagnostic
