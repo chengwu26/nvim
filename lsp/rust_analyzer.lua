@@ -18,14 +18,14 @@
 --- })
 --- ```
 ---
---- NOTE: do not set `init_options` for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"] per
+--- Note: do not set `init_options` for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"] per
 --- https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26.
 
----@param bufnr integer
 local function reload_workspace(bufnr)
-  local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
+  local clients = vim.lsp.get_clients { bufnr = bufnr, name = "rust_analyzer" }
   for _, client in ipairs(clients) do
-    vim.notify("Reloading Cargo Workspace")
+    vim.notify "Reloading Cargo Workspace"
+    ---@diagnostic disable-next-line:param-type-mismatch
     client:request("rust-analyzer/reloadWorkspace", nil, function(err)
       if err then
         error(tostring(err))
@@ -35,20 +35,58 @@ local function reload_workspace(bufnr)
   end
 end
 
----@param fname string
----@return string|nil
+---@param command string
+---@return boolean
+local function executable_exists(command)
+  local exists = vim.fn.executable(command) == 1
+
+  if not exists then
+    vim.notify_once(("[rust_analyzer] %s not found."):format(command), vim.log.levels.WARN)
+  end
+
+  return exists
+end
+
+local function user_sysroot_src()
+  ---@diagnostic disable-next-line
+  return vim.tbl_get(vim.lsp.config["rust_analyzer"], "settings", "rust-analyzer", "cargo", "sysrootSrc")
+end
+
+local sysroot_cache = {} ---@type table<string, string|false>
+
+local function default_sysroot_src()
+  ---@diagnostic disable-next-line
+  local sysroot = vim.tbl_get(vim.lsp.config["rust_analyzer"], "settings", "rust-analyzer", "cargo", "sysroot")
+  if not sysroot then
+    local cwd = vim.fn.getcwd()
+    if sysroot_cache[cwd] == nil then
+      local ok, result = pcall(function()
+        return vim.system({ "rustc", "--print", "sysroot" }, { text = true }):wait()
+      end)
+      sysroot_cache[cwd] = ok and result.code == 0 and result.stdout and vim.trim(result.stdout) or false
+    end
+    sysroot = sysroot_cache[cwd] or nil
+  end
+
+  return sysroot and vim.fs.joinpath(sysroot, "lib/rustlib/src/rust/library") or nil
+end
+
+local workspace_cache = {} ---@type table<string, string>
+
 local function is_library(fname)
   local user_home = vim.fs.normalize(vim.env.HOME)
-  local cargo_home = os.getenv("CARGO_HOME") or user_home .. "/.cargo"
+  local cargo_home = os.getenv "CARGO_HOME" or user_home .. "/.cargo"
   local registry = cargo_home .. "/registry/src"
   local git_registry = cargo_home .. "/git/checkouts"
 
-  local rustup_home = os.getenv("RUSTUP_HOME") or user_home .. "/.rustup"
+  local rustup_home = os.getenv "RUSTUP_HOME" or user_home .. "/.rustup"
   local toolchains = rustup_home .. "/toolchains"
 
-  for _, item in ipairs({ toolchains, registry, git_registry }) do
-    if vim.fs.relpath(item, fname) then
-      local clients = vim.lsp.get_clients({ name = "rust_analyzer" })
+  local sysroot_src = user_sysroot_src() or default_sysroot_src()
+
+  for _, item in ipairs { toolchains, registry, git_registry, sysroot_src } do
+    if item and vim.fs.relpath(item, fname) then
+      local clients = vim.lsp.get_clients { name = "rust_analyzer" }
       return #clients > 0 and clients[#clients].config.root_dir or nil
     end
   end
@@ -59,6 +97,10 @@ return {
   cmd = { "rust-analyzer" },
   filetypes = { "rust" },
   root_dir = function(bufnr, on_dir)
+    if not executable_exists("cargo") then
+      return
+    end
+
     local fname = vim.api.nvim_buf_get_name(bufnr)
     local reused_dir = is_library(fname)
     if reused_dir then
@@ -74,6 +116,12 @@ return {
         vim.fs.root(fname, { "rust-project.json" })
         or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
       )
+      return
+    end
+
+    ---@diagnostic disable-next-line
+    if workspace_cache[cargo_crate_dir] then
+      on_dir(workspace_cache[cargo_crate_dir])
       return
     end
 
@@ -96,11 +144,11 @@ return {
           end
         end
 
+        workspace_cache[cargo_crate_dir] = cargo_workspace_root or cargo_crate_dir
         on_dir(cargo_workspace_root or cargo_crate_dir)
       else
         vim.schedule(function()
-          vim.notify(("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd,
-            output.stderr))
+          vim.notify(("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd, output.stderr))
         end)
       end
     end)
@@ -119,7 +167,6 @@ return {
   },
   settings = {
     ["rust-analyzer"] = {
-      check = { command = "clippy" },
       lens = {
         debug = { enable = true },
         enable = true,
@@ -148,14 +195,14 @@ return {
         vim.list_extend(cmd, { "--", unpack(r.args.executableArgs) })
       end
 
-      local proc = vim.system(cmd, { cwd = r.args.cwd })
+      local proc = vim.system(cmd, { cwd = r.args.cwd, env = r.args.environment })
 
       local result = proc:wait()
 
       if result.code == 0 then
-        vim.notify(result.stdout, vim.log.levels.INFO)
+        vim.notify(assert(result.stdout), vim.log.levels.INFO)
       else
-        vim.notify(result.stderr, vim.log.levels.ERROR)
+        vim.notify(assert(result.stderr), vim.log.levels.ERROR)
       end
     end
   end,
