@@ -50,6 +50,38 @@ return {
           },
         },
       },
+      diagnostics = {
+        disable = {
+          "incomplete-signature-doc",
+          "iter-variable-reassign",
+          "unnecessary-if",
+        },
+        severity = {
+          deprecated = "warning",
+          ["duplicate-require"] = "warning",
+          ["preferred-local-alias"] = "warning",
+          ["redefined-local"] = "warning",
+          ["unreachable-code"] = "warning",
+          unused = "warning",
+        },
+        enables = {
+          "code-style-check",
+          "missing-global-doc",
+          "non-literal-expressions-in-assert",
+          "unknown-doc-tag",
+        },
+      },
+      codeAction = { insertSpace = true },
+      strict = { typeCall = true, arrayIndex = true },
+      doc = {
+        knownTags = {
+          "brief",
+          "inlinedoc",
+          "nodoc",
+          "note",
+          "since",
+        },
+      },
     },
   },
   on_init = function(client)
