@@ -13,6 +13,7 @@ return {
   },
   cmd = "Telescope",
   event = "LspAttach", -- Improve LSP features
+  -- stylua: ignore
   keys = {
     { "<leader>/",        function() require(blt).live_grep() end,                          desc = "Grep" },
     { "<leader>/",        function() require(blt).grep_string() end,                        desc = "Search it",         mode = "v" },

@@ -41,12 +41,12 @@ return {
       -- Action
       map("n", "<leader>gs", gitsigns.stage_hunk, "Stage Hunk")
       map("n", "<leader>gr", gitsigns.reset_hunk, "Reset Hunk")
-      map("v", "<leader>gs",
-        function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
-        "Stage These Lines")
-      map("v", "<leader>gr",
-        function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
-        "Reset These Lines")
+      map("v", "<leader>gs", function()
+        gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      end, "Stage These Lines")
+      map("v", "<leader>gr", function()
+        gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      end, "Reset These Lines")
 
       map("n", "<leader>gS", gitsigns.stage_buffer, "Stage Buffer")
       map("n", "<leader>gR", gitsigns.reset_buffer, "Reset Buffer")

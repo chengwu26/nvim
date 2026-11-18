@@ -6,8 +6,12 @@
 --  full (default): Load all plugins defined in this configuration
 RT_LEVEL = {
   level = ({ vi = 0, vim = 1 })[vim.fs.basename(vim.v.argv[1])] or 2,
-  is_basic = function(t) return t.level >= 1 end,
-  is_full = function(t) return t.level >= 2 end,
+  is_basic = function(t)
+    return t.level >= 1
+  end,
+  is_full = function(t)
+    return t.level >= 2
+  end,
 }
 -- Define your commonly used filetypes. This maybe control some plugin's load logic
 -- Program language

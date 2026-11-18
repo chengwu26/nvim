@@ -11,7 +11,9 @@ return {
   keys = {
     {
       "<leader>?",
-      function() require("which-key").show({ global = false }) end,
+      function()
+        require("which-key").show({ global = false })
+      end,
       desc = "Buffer Local Keymaps (which-key)",
     },
   },
@@ -21,8 +23,9 @@ return {
     preset = "helix",
     keys = {
       scroll_down = "<c-j>", -- Binding to scroll down inside the popup
-      scroll_up = "<c-k>",   -- Binding to scroll up inside the popup
+      scroll_up = "<c-k>", -- Binding to scroll up inside the popup
     },
+    -- stylua: ignore
     ---@type wk.Spec
     spec = {
       { "<leader>t", group = "Toggle" },

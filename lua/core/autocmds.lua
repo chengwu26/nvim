@@ -7,7 +7,9 @@ local cmd = vim.api.nvim_create_autocmd
 -- [[ General ]]
 cmd("TextYankPost", {
   desc = "Highlight when yanking text",
-  callback = function() vim.hl.on_yank() end,
+  callback = function()
+    vim.hl.on_yank()
+  end,
 })
 
 cmd("FileType", {
@@ -38,7 +40,9 @@ cmd("LspAttach", {
       desc = "LSP: Highlight symbol under the cursor",
       buf = args.buf,
       callback = function()
-        if client:is_stopped() then return true end
+        if client:is_stopped() then
+          return true
+        end
         vim.lsp.buf.document_highlight()
       end,
     })
@@ -47,7 +51,9 @@ cmd("LspAttach", {
       desc = "LSP: Highlight symbol under the cursor",
       buf = args.buf,
       callback = function()
-        if client:is_stopped() then return end
+        if client:is_stopped() then
+          return
+        end
         vim.lsp.buf.clear_references()
       end,
     })
@@ -106,7 +112,9 @@ do
   ---@field outgoing_calls fun()
   local proxy = setmetatable({}, {
     __index = function(_, key)
-      return function(...) return vim.lsp.buf[key](...) end
+      return function(...)
+        return vim.lsp.buf[key](...)
+      end
     end,
   })
   local methods = vim.lsp.protocol.Methods
@@ -186,13 +194,17 @@ do
     [methods.typeHierarchy_supertypes] = {
       mode = "n",
       lhs = "grt",
-      rhs = function() vim.lsp.buf.typehierarchy("supertypes") end,
+      rhs = function()
+        vim.lsp.buf.typehierarchy("supertypes")
+      end,
       desc = "List Supertypes",
     },
     [methods.typeHierarchy_subtypes] = {
       mode = "n",
       lhs = "grT",
-      rhs = function() vim.lsp.buf.typehierarchy("subtypes") end,
+      rhs = function()
+        vim.lsp.buf.typehierarchy("subtypes")
+      end,
       desc = "List Subtypes",
     },
     [methods.textDocument_inlayHint] = {
@@ -223,7 +235,8 @@ do
           keymap.mode,
           keymap.lhs,
           keymap.rhs(buffer),
-          { desc = "LSP: " .. keymap.desc, buf = buffer })
+          { desc = "LSP: " .. keymap.desc, buf = buffer }
+        )
         goto continue
       end
 
@@ -311,7 +324,9 @@ do
     return function(err, res, ctx)
       local result = overridden(err, res, ctx) ---@diagnostic disable-line
       local client = vim.lsp.get_client_by_id(ctx.client_id)
-      if not client then return end
+      if not client then
+        return
+      end
 
       for buffer, _ in pairs(client.attached_buffers) do
         local group_exists = pcall(vim.api.nvim_get_autocmds, { group = "kg.lsp.formata.on_save" })

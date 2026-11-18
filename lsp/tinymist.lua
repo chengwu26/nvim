@@ -15,8 +15,8 @@
 ---@param bufnr integer
 ---@return fun():nil run_tinymist_command, string cmd_name, string cmd_desc
 local function create_tinymist_command(command_name, client, bufnr)
-  local export_type = command_name:match "tinymist%.export(%w+)"
-  local info_type = assert(command_name:match "tinymist%.(%w+)")
+  local export_type = command_name:match("tinymist%.export(%w+)")
+  local info_type = assert(command_name:match("tinymist%.(%w+)"))
   local cmd_display = export_type or info_type:gsub("^get", "Get"):gsub("^pin", "Pin")
   ---@return nil
   local function run_tinymist_command()
@@ -46,7 +46,7 @@ return {
   filetypes = { "typst" },
   root_markers = { ".git" },
   on_attach = function(client, bufnr)
-    for _, command in ipairs {
+    for _, command in ipairs({
       "tinymist.exportSvg",
       "tinymist.exportPng",
       "tinymist.exportPdf",
@@ -60,9 +60,14 @@ return {
       "tinymist.getWorkspaceLabels",
       "tinymist.getDocumentMetrics",
       "tinymist.pinMain",
-    } do
+    }) do
       local cmd_func, cmd_name, cmd_desc = create_tinymist_command(command, client, bufnr)
-      vim.api.nvim_buf_create_user_command(bufnr, "Lsp" .. cmd_name, cmd_func, { nargs = 0, desc = cmd_desc })
+      vim.api.nvim_buf_create_user_command(
+        bufnr,
+        "Lsp" .. cmd_name,
+        cmd_func,
+        { nargs = 0, desc = cmd_desc }
+      )
     end
   end,
 }

@@ -13,10 +13,18 @@ map("i", "jk", "<ESC>")
 map("n", "<ESC>", "<CMD>nohlsearch<CR>")
 map("x", "/", "<ESC>/\\%V", { desc = "Search within visual selection" })
 map("n", "L", vim.diagnostic.open_float, { desc = "Show Diagnostic" })
-map("i", "<Tab>", 'pumvisible() ? "<C-y>" : "<Tab>"',
-  { expr = true, noremap = true, desc = "<Tab> accept completion" })
-map("i", "<CR>", 'pumvisible() ? "<C-e><CR>" : "<CR>"',
-  { expr = true, noremap = true, desc = "Disable <CR> insert complete entry" })
+map(
+  "i",
+  "<Tab>",
+  "pumvisible() ? \"<C-y>\" : \"<Tab>\"",
+  { expr = true, noremap = true, desc = "<Tab> accept completion" }
+)
+map(
+  "i",
+  "<CR>",
+  "pumvisible() ? \"<C-e><CR>\" : \"<CR>\"",
+  { expr = true, noremap = true, desc = "Disable <CR> insert complete entry" }
+)
 -- more consistent behavior of j/k when warp is set
 map({ "n", "x" }, "j", "v:count ? 'j' : 'gj'", { expr = true })
 map({ "n", "x" }, "k", "v:count ? 'k' : 'gk'", { expr = true })
@@ -45,14 +53,18 @@ map("x", ">", ">gv", { desc = "Indent line" })
 
 -- Window
 local smart_navigation = require("kg.tmux").smart_navigation
-map({ "n", "t" }, "<C-h>", function() smart_navigation("h") end,
-  { desc = "Focus the left window/pane" })
-map({ "n", "t" }, "<C-l>", function() smart_navigation("l") end,
-  { desc = "Focus the right window/pane" })
-map({ "n", "t" }, "<C-j>", function() smart_navigation("j") end,
-  { desc = "Focus the lower window/pane" })
-map({ "n", "t" }, "<C-k>", function() smart_navigation("k") end,
-  { desc = "Focus the upper window/pane" })
+map({ "n", "t" }, "<C-h>", function()
+  smart_navigation("h")
+end, { desc = "Focus the left window/pane" })
+map({ "n", "t" }, "<C-l>", function()
+  smart_navigation("l")
+end, { desc = "Focus the right window/pane" })
+map({ "n", "t" }, "<C-j>", function()
+  smart_navigation("j")
+end, { desc = "Focus the lower window/pane" })
+map({ "n", "t" }, "<C-k>", function()
+  smart_navigation("k")
+end, { desc = "Focus the upper window/pane" })
 map("n", "\\", "<CMD>sp<CR>", { desc = "Split window horizontally" })
 map("n", "|", "<CMD>vsp<CR>", { desc = "Split window vertically" })
 
