@@ -32,11 +32,13 @@ return {
     emmylua = {}
   },
   on_init = function(client)
+    ---@type string
     local root_dir = client.workspace_folders and client.workspace_folders[1].name
     if not root_dir then return end
 
     local in_neovim = root_dir == vim.fn.stdpath("config")
         or vim.startswith(root_dir, vim.env.VIMRUNTIME)
+        or vim.startswith(root_dir, vim.fn.stdpath("data")) ---@diagnostic disable-line
 
     if not in_neovim then return end
 
