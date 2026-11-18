@@ -26,21 +26,46 @@ return {
   cmd = { "emmylua_ls", "--editor", "neovim" },
   filetypes = { "lua" },
   root_markers = vim.fn.has("nvim-0.11.3") == 1 and { root_markers1, root_markers2, { ".git" } }
-      or vim.list_extend(vim.list_extend(root_markers1, root_markers2), { ".git" }),
+    or vim.list_extend(vim.list_extend(root_markers1, root_markers2), { ".git" }),
   workspace_required = false,
   settings = {
-    emmylua = {}
+    emmylua = {
+      format = {
+        externalTool = {
+          program = "stylua",
+          args = {
+            "-",
+            "--stdin-filepath",
+            "${file}",
+            "--column-width",
+            "100",
+            "--line-endings",
+            "Unix",
+            "--indent-type",
+            "Spaces",
+            "--indent-width",
+            "2",
+            "--quote-style",
+            "ForceDouble",
+          },
+        },
+      },
+    },
   },
   on_init = function(client)
     ---@type string
     local root_dir = client.workspace_folders and client.workspace_folders[1].name
-    if not root_dir then return end
+    if not root_dir then
+      return
+    end
 
     local in_neovim = root_dir == vim.fn.stdpath("config")
-        or vim.startswith(root_dir, vim.env.VIMRUNTIME)
-        or vim.startswith(root_dir, vim.fn.stdpath("data")) ---@diagnostic disable-line
+      or vim.startswith(root_dir, vim.env.VIMRUNTIME)
+      or vim.startswith(root_dir, vim.fn.stdpath("data")) ---@diagnostic disable-line
 
-    if not in_neovim then return end
+    if not in_neovim then
+      return
+    end
 
     local libraries = {
       vim.env.VIMRUNTIME,
@@ -51,11 +76,15 @@ return {
     local data_path = vim.fn.stdpath("data") ---@cast data_path string
     local lazy_path = vim.fs.joinpath(data_path, "lazy")
     local handle = vim.uv.fs_scandir(lazy_path)
-    if not handle then return end
+    if not handle then
+      return
+    end
 
     while true do
       local name, ty = vim.uv.fs_scandir_next(handle)
-      if not name then break end
+      if not name then
+        break
+      end
       if ty == "directory" then
         local lua_path = vim.fs.joinpath(lazy_path, name, "lua")
         if vim.uv.fs_stat(lua_path) then
