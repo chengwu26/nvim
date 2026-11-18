@@ -9,6 +9,7 @@ return {
   opts = {
     fast_wrap = {}, -- Enable fast_wrap, detail see documentation comment
     disable_in_visualblock = true,
+    map_cr = false, -- If true, the <CR> will accept complete entry
   },
   config = function(_, opts)
     local Rule = require("nvim-autopairs.rule")
